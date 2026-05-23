@@ -114,6 +114,7 @@ Archivo: `Lore/Capitulos/07.md`
 - Reunión con el Duque Brightshield y advertencia secreta de Alarico Belmonte
 - Recompensa para el templo de Deneir, no muertos de
 - Negociaciones con Armando Cortés y confesiones de Eliza Belmonte
+- Emilio y Johanna atienden heridos mientras
 - Viaje nocturno por el Río Verde hacia el Distrito de los Artesanos
 - Alojamiento en la Posada de los Herreros y visita a la forja principal
 - Investigación en El Cuenco de Carbón sobre Petro y los mercenarios
