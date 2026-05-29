@@ -1886,7 +1886,7 @@
                 "Elfo"
             ],
             "playerToolsProficiency": [],
-            "initiativeButton": "+3",
+            "initiativeButton": "+ds3",
             "AC": "16",
             "speed": "35ft.",
             "characterLevel": "9",
