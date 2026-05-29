@@ -2270,7 +2270,7 @@
                     "slots": [
                         true,
                         true,
-                        true
+                        false
                     ]
                 },
                 "3rd-level": {
