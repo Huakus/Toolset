@@ -2192,7 +2192,7 @@
                     "slots": [
                         false,
                         false,
-                        true,
+                        false,
                         true
                     ]
                 },
