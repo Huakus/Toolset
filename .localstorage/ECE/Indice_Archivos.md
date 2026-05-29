@@ -2,7 +2,7 @@
 
 Generado automaticamente por `.localstorage/scripts/8_generate-public-file-index.ps1`.
 
-Generado: 2026-05-23 19:03:23 -03:00
+Generado: 2026-05-28 21:31:37 -03:00
 
 Carpeta local indexada: `C:\Users\joaqu\AppData\LocalLow\BouncyRock Entertainment\TaleSpire\Symbiotes\Toolset\.localstorage\ECE`
 
