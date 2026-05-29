@@ -819,7 +819,7 @@
                                "notes":  [
                                              {
                                                  "noteTitle":  "inventario auxiliar",
-                                                 "noteContent":  "un sÃ­mbolo sagrado.\nDiamante para revivir\n0 raciones\nantÃ­doto\nemaablema de contrabandista \nbrazalete de ilusiÃ³n menor\ngemas 150 de oro\nposiones de cuaraciÃ³n 1\npiedra de foco divino\nLibro de los caballerossa\n740 de oro\n1120 de plata\n430 cobre\n9 de fragmentos de cristales \n3 cristales inestables \n2 pociones de curaciÃ³n mayor\nCollar bola de fuego 3 cargas\ntomo de la Zona luciente\nTodo de ur narkam\ncorazÃ³n de Ku rash\n"
+                                                 "noteContent":  "un sÃ­mbolo sagrado.\nDiamante para revivir\n0 raciones\nantÃ­doto\nemaablema de contrabandista \nbrazalete de ilusiÃ³n menor\ngemas 150 de oro\nposiones de cuaraciÃ³n 1\npiedra de foco divino\nLibro de los caballerossa\n740 de oro\n1120 de plata\n430 cobre\n9 de fragmentos de cristales \n3 cristales inestables \n2 pociones de curaciÃ³n mayor\nCollar bola de fuego 3 cargas\ntomo de la Zona luciente\nTodo de ur narkam\ncorazÃ³n de Ku rash\nanillo del marquez\n3 tomos del marquez"
                                              }
                                          ]
                            },
