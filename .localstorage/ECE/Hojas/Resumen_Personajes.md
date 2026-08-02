@@ -1,11 +1,11 @@
 # Resumen de personajes
 
-> Estado V2 `7dedb652dcc1b2a8b4f04b26e5a913605242ea13415be3453ebf2577eb366d10`. Generado automaticamente; no editar.
+> Estado V2 `a21443c56d86f3689fb1450bcd0e52421b03a3abe119d172217f6a67f895ed4f`. Generado automaticamente; no editar.
 
 ## Delerion
 - Clase y nivel: Mago Nigromante Ermitaño 9
 - PG: 56 + 0 temporales / 56; CA: 15; velocidad: 30ft.
-- Condiciones: Concentración
+- Condiciones: Concentración, Agarrado, Acelerar
 - Hoja completa: `delerion.md`
 
 ## Skitrixx "Stix Ernesto" Koboldtanz
