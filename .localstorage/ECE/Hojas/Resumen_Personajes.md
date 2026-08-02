@@ -1,6 +1,6 @@
 # Resumen de personajes
 
-> Estado V2 `de5aa1373e230eb054104f621ae41ea18775025e5f20de0fe0c08c09a98886cc`. Generado automaticamente; no editar.
+> Estado V2 `28b5df368ac49d1221a3895a8566d79f3549f4123ff11b380b508848470a6f87`. Generado automaticamente; no editar.
 
 ## Delerion
 - Clase y nivel: Mago Nigromante Ermitaño 9
