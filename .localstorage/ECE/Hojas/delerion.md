@@ -9,8 +9,8 @@
 
 ## Estado actual
 
-- Revision: 81
-- Ultima actualizacion: 2026-08-02T23:19:19.336Z
+- Revision: 84
+- Ultima actualizacion: 2026-08-02T23:19:31.463Z
 
 ## Datos completos V2
 
@@ -18,7 +18,7 @@
 {
     "schemaVersion":  2,
     "id":  "chr_9c8595d34129af1cf1218c06e84d0b26",
-    "revision":  81,
+    "revision":  84,
     "name":  "Delerion",
     "color":  "#9a73ad",
     "identity":  {
@@ -57,13 +57,6 @@
                                   },
                    "conditions":  [
                                       {
-                                          "id":  "cnd_dc322825ade3580e1a6acd63589cb3b0",
-                                          "key":  "concentration",
-                                          "label":  "Concentración",
-                                          "level":  null,
-                                          "addedAt":  "2026-07-26T22:22:05.589Z"
-                                      },
-                                      {
                                           "id":  "cnd_a4666683ee0c0fbbfe9fb7fee26e5ae6",
                                           "key":  "grappled",
                                           "label":  "Agarrado",
@@ -76,6 +69,20 @@
                                           "label":  "Acelerar",
                                           "level":  null,
                                           "addedAt":  "2026-08-02T23:19:19.336Z"
+                                      },
+                                      {
+                                          "id":  "cnd_5f6262431821208e87511bdf15c61d6f",
+                                          "key":  "deafened",
+                                          "label":  "Ensordecido",
+                                          "level":  null,
+                                          "addedAt":  "2026-08-02T23:19:27.507Z"
+                                      },
+                                      {
+                                          "id":  "cnd_e5891b9d353ccd9362137139e4eab8b7",
+                                          "key":  "prone",
+                                          "label":  "Derribado",
+                                          "level":  null,
+                                          "addedAt":  "2026-08-02T23:19:31.463Z"
                                       }
                                   ],
                    "inspiration":  false,
@@ -3858,7 +3865,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-08-02T23:19:19.336Z",
+                     "updatedAt":  "2026-08-02T23:19:31.463Z",
                      "migratedFrom":  "v1"
                  }
 }
