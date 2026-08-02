@@ -1,12 +1,8 @@
-﻿# Indice de archivos ECE
+# Indice de archivos ECE
 
 Generado automaticamente por `.localstorage/scripts/8_generate-public-file-index.ps1`.
 
-Generado: 2026-07-21 20:52:04 -03:00
-
-Carpeta local indexada: `C:\Users\joaqu\AppData\LocalLow\BouncyRock Entertainment\TaleSpire\Symbiotes\Toolset\.localstorage\ECE`
-
-Total de archivos indexados: 42
+Total de archivos indexados: 43
 
 ## Uso recomendado
 
@@ -20,13 +16,14 @@ Path parcial:
 
 ## Archivos
 
-- `Hojas/adler.txt`
-- `Hojas/borgar.txt`
-- `Hojas/delerion.txt`
-- `Hojas/juanpi.txt`
-- `Hojas/mercion.txt`
-- `Hojas/skitrixx_stix_ernesto_koboldtanz.txt`
-- `Hojas/varka.txt`
+- `Hojas/adler.md`
+- `Hojas/borgar.md`
+- `Hojas/delerion.md`
+- `Hojas/juanpi.md`
+- `Hojas/mercion.md`
+- `Hojas/Resumen_Personajes.md`
+- `Hojas/skitrixx_stix_ernesto_koboldtanz.md`
+- `Hojas/varka.md`
 - `Indice_Archivos.md`
 - `Lore/Capitulos/01.md`
 - `Lore/Capitulos/02.md`
@@ -62,4 +59,3 @@ Path parcial:
 - `Lore/Indice_Personajes.md`
 - `Manuales/D&D - Manual del Jugador 5E.pdf`
 - `Manuales/Guia de Xanathar para todo.pdf`
-
