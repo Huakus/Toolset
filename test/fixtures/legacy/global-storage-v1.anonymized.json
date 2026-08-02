@@ -1,0 +1,26 @@
+{
+  "language": {
+    "Preferred Language": "es"
+  },
+  "Custom Equipment": {
+    "Objeto ficticio": {
+      "name": "Objeto ficticio",
+      "weight": 1,
+      "cost": "1 gp"
+    }
+  },
+  "npcList": {},
+  "checklists": {},
+  "encounters": {},
+  "loot": {},
+  "travel-1": {},
+  "ThemeSettings": {
+    "UserTheme": {
+      "theme": "default"
+    }
+  },
+  "Custom Spells": {},
+  "effectsSection": {},
+  "Custom Monsters": {},
+  "Shop Data": {}
+}

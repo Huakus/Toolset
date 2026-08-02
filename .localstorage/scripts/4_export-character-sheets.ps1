@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Exporta una hoja TXT por cada personaje del JSON principal del Toolset.
+Exporta una hoja Markdown por cada personaje de la campaña V2.
 
 .DESCRIPTION
 Modo nuevo recomendado:
@@ -13,6 +13,7 @@ Compatibilidad:
 
 param(
     [string]$StopSignalFile,
+    [string]$CampaignFileName = 'd8383957-1a6b-4719-9b68-797f03145404',
     [int]$IntervalSeconds = 10,
     [switch]$RunOnce,
     [switch]$Quiet,
@@ -31,6 +32,7 @@ $CommonLoggingScript = Join-Path $ScriptDir '0_common-logging.ps1'
 Initialize-Logging -ScriptPath $PSCommandPath
 
 $LocalStorageDir = Split-Path -Parent $ScriptDir
+$CampaignFile = Join-Path $LocalStorageDir $CampaignFileName
 $OutputDir = Join-Path $LocalStorageDir 'ECE\Hojas'
 
 $IgnoredDirectoryNames = @(
@@ -150,23 +152,27 @@ function Get-PropertyValue {
 }
 
 function Find-ToolsetJsonWithCharacters {
-    $candidates = Get-TextFileCandidates -RootPath $LocalStorageDir |
-        Sort-Object Length -Descending
+    if (-not (Test-Path -LiteralPath $CampaignFile)) { return $null }
+    $candidates = @(Get-Item -LiteralPath $CampaignFile)
 
     foreach ($file in $candidates) {
         try {
             $text = Get-Content -LiteralPath $file.FullName -Raw -ErrorAction Stop
 
-            if ($text -notmatch '"characters"') { continue }
+            if ($text -notmatch '"__talespire5eToolsetV2"') { continue }
 
             $json = ConvertFrom-ToolsetJson -JsonText $text
-            $characters = Get-PropertyValue -Object $json -Names @('characters')
+            $envelope = Get-PropertyValue -Object $json -Names @('__talespire5eToolsetV2')
+            if (-not $envelope -or $envelope.format -ne 'talespire-toolset-campaign-v2' -or $envelope.schemaVersion -ne 2) { continue }
+            if ([string]$envelope.checksum -notmatch '^[0-9a-fA-F]{64}$') { continue }
+            $characters = Get-PropertyValue -Object $envelope.campaign -Names @('characters')
 
             if ($characters) {
                 return [PSCustomObject]@{
                     File = $file
                     Json = $json
                     Characters = $characters
+                    Checksum = [string]$envelope.checksum
                 }
             }
         } catch {
@@ -223,9 +229,10 @@ function Convert-CharacterToText {
     $lines.Add('> No editar manualmente.')
     $lines.Add('')
 
-    $class = Get-PropertyValue -Object $Character -Names @('class', 'clase')
-    $race = Get-PropertyValue -Object $Character -Names @('race', 'raza')
-    $level = Get-PropertyValue -Object $Character -Names @('level', 'nivel')
+    $identity = Get-PropertyValue -Object $Character -Names @('identity')
+    $class = Get-PropertyValue -Object $identity -Names @('className')
+    $race = Get-PropertyValue -Object $Character.legacy.unmapped -Names @('race', 'raza')
+    $level = Get-PropertyValue -Object $identity -Names @('level')
 
     if ($race -or $class -or $level) {
         $lines.Add('## Resumen')
@@ -235,7 +242,12 @@ function Convert-CharacterToText {
         $lines.Add('')
     }
 
-    $lines.Add('## Datos completos')
+    $lines.Add('## Estado actual')
+    $lines.Add('')
+    $lines.Add(('- Revisión: {0}' -f $Character.revision))
+    $lines.Add(('- Última actualización: {0}' -f $Character.metadata.updatedAt))
+    $lines.Add('')
+    $lines.Add('## Datos completos V2')
     $lines.Add('')
     $lines.Add('```json')
     $lines.Add(($Character | ConvertTo-Json -Depth 100))
@@ -267,7 +279,7 @@ function Invoke-ExportCharacterSheetsOnce {
 
     $source = Find-ToolsetJsonWithCharacters
     if (-not $source) {
-        Write-Log 'WARNING: No se encontro un JSON principal con nodo characters.' -Color 'Yellow'
+        Write-Log 'WARNING: No se encontró una campaña con envelope V2 válido.' -Color 'Yellow'
         return
     }
 
@@ -278,7 +290,7 @@ function Invoke-ExportCharacterSheetsOnce {
 
     foreach ($entry in $characters) {
         $safeName = ConvertTo-SafeFilePart $entry.Name
-        $fileName = "$safeName.txt"
+        $fileName = "$safeName.md"
         $path = Join-Path $OutputDir $fileName
         [void]$expectedFiles.Add($path.ToLowerInvariant())
 
@@ -290,7 +302,7 @@ function Invoke-ExportCharacterSheetsOnce {
         }
     }
 
-    $existingFiles = Get-ChildItem -LiteralPath $OutputDir -Filter '*.txt' -File -ErrorAction SilentlyContinue
+    $existingFiles = Get-ChildItem -LiteralPath $OutputDir -File -ErrorAction SilentlyContinue | Where-Object { $_.Extension -in @('.txt', '.md') }
     foreach ($file in $existingFiles) {
         if (-not $expectedFiles.Contains($file.FullName.ToLowerInvariant())) {
             Remove-Item -LiteralPath $file.FullName -Force

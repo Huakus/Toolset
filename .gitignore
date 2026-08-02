@@ -2,3 +2,6 @@
 .localstorage/ECE/.tmp.drivedownload/
 desktop.ini
 .localstorage/**/desktop.ini
+node_modules/
+dist-v2/
+coverage/

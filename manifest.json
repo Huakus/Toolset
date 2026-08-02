@@ -1,6 +1,6 @@
 {
   "manifestVersion": 1,
-  "name": "Talespire 5e Toolset",
+  "name": "Talespire 5e Toolset Prototype",
   "summary": "A VTT like experiance for Talespire",
   "descriptionFilePath": "/README.md",
   "version": "0.7.6",
@@ -10,7 +10,7 @@
     "authors": ["illume63"]
   },
   "kind": "webView",
-  "entryPoint": "/index.html",
+  "entryPoint": "/dist-v2/v2.html",
   "api": {
     "version": "0.1",
     "initTimeout": 10,
@@ -41,7 +41,7 @@
       }
     },
     "interop": {
-      "id": "10f34bc9-dfa2-4623-a691-bf0a1fb2d9d1"
+      "id": "10f34bc9-dfa2-4623-a691-bf0a1fb2d9d2"
     }
   },
   "controls": {

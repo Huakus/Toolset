@@ -205,14 +205,13 @@ try {
 
  $Repo = Split-Path -Parent (Split-Path -Parent $ScriptDir)
  $PublicFileIndexRepo = Join-Path $Repo '.localstorage\ECE'
- $PublicFileIndexBaseUrl = 'https://elcirculoeterno.macreative.site/campaign_files/ECE'
  $PublicFileIndexRelativePath = 'Indice_Archivos.md'
 
  # 1. Genera el indice publico una vez antes de iniciar el sync.
  Invoke-PowerShellOnce `
   -Title 'Public File Index Generator' `
   -ScriptPath $GeneratePublicFileIndexScript `
-  -ExtraArgs @('-Repo', (Quote-Argument $PublicFileIndexRepo), '-BaseUrl', $PublicFileIndexBaseUrl, '-OutputRelativePath', $PublicFileIndexRelativePath)
+  -ExtraArgs @('-Repo', (Quote-Argument $PublicFileIndexRepo), '-OutputRelativePath', $PublicFileIndexRelativePath)
 
  # 2. Arranca el sync como worker independiente.
  $syncProcess = Start-PowerShellWorker `
@@ -286,7 +285,7 @@ try {
  Invoke-PowerShellOnce `
   -Title 'Public File Index Generator Final' `
   -ScriptPath $GeneratePublicFileIndexScript `
-  -ExtraArgs @('-Repo', (Quote-Argument $PublicFileIndexRepo), '-BaseUrl', $PublicFileIndexBaseUrl, '-OutputRelativePath', $PublicFileIndexRelativePath)
+  -ExtraArgs @('-Repo', (Quote-Argument $PublicFileIndexRepo), '-OutputRelativePath', $PublicFileIndexRelativePath)
 
  # 9. Sync final one-shot para subir el indice publico definitivo.
  Invoke-PowerShellOnce `

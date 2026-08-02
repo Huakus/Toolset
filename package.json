@@ -1,0 +1,25 @@
+{
+  "name": "talespire-5e-toolset",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Clean v2 implementation of the TaleSpire 5e Toolset.",
+  "type": "module",
+  "scripts": {
+    "dev:v2": "vite --open /v2.html",
+    "build:v2": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run test:legacy && npm run test:v2",
+    "test:legacy": "node --test test/legacy/legacy-contract.test.mjs",
+    "test:v2": "vitest run",
+    "check": "npm run typecheck && npm test && npm run build:v2"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
+  }
+}

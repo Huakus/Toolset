@@ -1,0 +1,195 @@
+{
+  "characters": {
+    "Personaje Alfa": {
+      "characterTempHp": "2",
+      "currentHitDice": "3",
+      "insp": 1,
+      "upcastToggle": 1,
+      "exhaustionToggle": 0,
+      "playerWeaponProficiency": ["Arma simple"],
+      "playerArmorProficiency": ["Armadura ligera"],
+      "playerLanguageProficiency": ["Común"],
+      "playerToolsProficiency": ["Herramienta de ejemplo"],
+      "initiativeButton": "+2",
+      "AC": "15",
+      "speed": "30ft.",
+      "characterLevel": "3",
+      "playerXP": "900",
+      "playerClass": "Clase ficticia",
+      "currentCharacterHP": "17",
+      "maxCharacterHP": "24",
+      "strengthScore": "10",
+      "dexterityScore": "14",
+      "constitutionScore": "12",
+      "intelligenceScore": "16",
+      "wisdomScore": "11",
+      "charismaScore": "8",
+      "acrobaticsMod": "+2",
+      "animalHandlingMod": "+0",
+      "arcanaMod": "+5",
+      "athleticsMod": "+0",
+      "deceptionMod": "-1",
+      "historyMod": "+5",
+      "insightMod": "+0",
+      "intimidationMod": "-1",
+      "investigationMod": "+3",
+      "medicineMod": "+0",
+      "natureMod": "+3",
+      "perceptionMod": "+0",
+      "performanceMod": "-1",
+      "persuasionMod": "-1",
+      "religionMod": "+3",
+      "sleightofHandMod": "+2",
+      "stealthMod": "+4",
+      "survivalMod": "+0",
+      "": 0,
+      "hitDiceButton": "3d6",
+      "pb-1": 1,
+      "pb-2": 0,
+      "pb-3": 1,
+      "pb-4": 0,
+      "pb-5": 0,
+      "pb-6": 1,
+      "pb-7": 0,
+      "pb-8": 0,
+      "pb-9": 0,
+      "pb-10": 0,
+      "pb-11": 0,
+      "pb-12": 0,
+      "pb-13": 0,
+      "pb-14": 0,
+      "pb-15": 0,
+      "pb-16": 0,
+      "pb-17": 1,
+      "pb-18": 0,
+      "pb-19": 0,
+      "pb-20": 0,
+      "pb-21": 0,
+      "pb-22": 0,
+      "pb-23": 0,
+      "pb-24": 0,
+      "conditions": [],
+      "coins": {
+        "cp": 4,
+        "sp": 3,
+        "ep": 0,
+        "gp": 12,
+        "pp": 0
+      },
+      "alignment": "Neutral",
+      "actionTable": [
+        {
+          "1": {
+            "proficiencyButton": "1",
+            "secondColumn": "Acción de ejemplo",
+            "itemId": "item-fixture-001",
+            "thirdColumn": "5ft",
+            "fourthColumn": "+4",
+            "fifthColumn": "1d6+2",
+            "sixthColumn": "ActionSettings",
+            "seventhColumn": "DES",
+            "weaponType": "Cuerpo a cuerpo",
+            "eighthColumn": "",
+            "damageBonus": "",
+            "tenthColumn": "Finesse",
+            "elventhColumn": "Descripción ficticia sin datos de campaña.",
+            "twelvethColumn": "Perforante",
+            "ninthColumn": {
+              "attacks": true,
+              "actions": true,
+              "bonus-actions": false,
+              "reactions": false,
+              "other": false
+            }
+          }
+        }
+      ],
+      "spellData": {
+        "spellcastingModifier": "INT",
+        "spelllevelselected": "1",
+        "Cantrip": {
+          "spells": [
+            {
+              "name": "Truco ficticio",
+              "prepared": "false"
+            }
+          ],
+          "slots": []
+        },
+        "1st-level": {
+          "spells": [
+            {
+              "name": "Conjuro ficticio",
+              "prepared": "1"
+            }
+          ],
+          "slots": [true, false]
+        }
+      },
+      "inventoryData": {
+        "equipment": [
+          {
+            "name": "Objeto ficticio",
+            "uniqueId": "item-fixture-001",
+            "quantity": 1,
+            "weight": 2,
+            "cost": "5 gp",
+            "equipped": true
+          }
+        ],
+        "backpack": [],
+        "other-possessions": [],
+        "attunement": []
+      },
+      "groupTraitData": [
+        {
+          "group-title": "Grupo ficticio",
+          "group-chevron": false,
+          "traits": [
+            {
+              "traitName": "Rasgo ficticio",
+              "cheveron": true,
+              "traitDescription": "Texto sintético.",
+              "checkboxStates": [],
+              "numberOfUses": "1",
+              "adjustmentCategory": "None",
+              "adjustmentSubCategory": "",
+              "adjustmentAbility": "NONE",
+              "adjustmentValue": "0",
+              "resetType": "long-rest"
+            }
+          ]
+        }
+      ],
+      "groupNotesData": [
+        {
+          "group-title": "Notas ficticias",
+          "group-chevron": false,
+          "notes": [
+            {
+              "noteTitle": "Nota de prueba",
+              "noteContent": "Contenido sintético sin información personal ni de campaña."
+            }
+          ]
+        }
+      ],
+      "extrasData": [
+        {
+          "name": "Criatura ficticia (A)",
+          "currentHp": "4",
+          "maxHp": "4",
+          "tempHp": "0"
+        }
+      ]
+    }
+  },
+  "DmNotes": {
+    "groupNotesData": []
+  },
+  "Encounter Data": {
+    "Encuentro ficticio": {
+      "round": 1,
+      "entries": []
+    }
+  }
+}

@@ -134,16 +134,10 @@ if (-not $indexExistsInList) {
  ) + $files
 }
 
-$generatedAt = Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'
-
 $content = New-Object System.Collections.Generic.List[string]
 $content.Add('# Indice de archivos ECE')
 $content.Add('')
 $content.Add('Generado automaticamente por `.localstorage/scripts/8_generate-public-file-index.ps1`.')
-$content.Add('')
-$content.Add(('Generado: {0}' -f $generatedAt))
-$content.Add('')
-$content.Add(('Carpeta local indexada: `{0}`' -f $Repo))
 $content.Add('')
 $content.Add(('Total de archivos indexados: {0}' -f $files.Count))
 $content.Add('')
