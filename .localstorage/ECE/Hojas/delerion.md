@@ -9,8 +9,8 @@
 
 ## Estado actual
 
-- Revision: 84
-- Ultima actualizacion: 2026-08-02T23:19:31.463Z
+- Revision: 86
+- Ultima actualizacion: 2026-08-02T23:19:46.743Z
 
 ## Datos completos V2
 
@@ -18,7 +18,7 @@
 {
     "schemaVersion":  2,
     "id":  "chr_9c8595d34129af1cf1218c06e84d0b26",
-    "revision":  84,
+    "revision":  86,
     "name":  "Delerion",
     "color":  "#9a73ad",
     "identity":  {
@@ -56,20 +56,6 @@
                                       "failures":  0
                                   },
                    "conditions":  [
-                                      {
-                                          "id":  "cnd_a4666683ee0c0fbbfe9fb7fee26e5ae6",
-                                          "key":  "grappled",
-                                          "label":  "Agarrado",
-                                          "level":  null,
-                                          "addedAt":  "2026-08-02T23:19:16.276Z"
-                                      },
-                                      {
-                                          "id":  "cnd_fae595430ee960d05f5ef2fda2c44882",
-                                          "key":  "haste",
-                                          "label":  "Acelerar",
-                                          "level":  null,
-                                          "addedAt":  "2026-08-02T23:19:19.336Z"
-                                      },
                                       {
                                           "id":  "cnd_5f6262431821208e87511bdf15c61d6f",
                                           "key":  "deafened",
@@ -3865,7 +3851,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-08-02T23:19:31.463Z",
+                     "updatedAt":  "2026-08-02T23:19:46.743Z",
                      "migratedFrom":  "v1"
                  }
 }
