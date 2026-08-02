@@ -9,8 +9,8 @@
 
 ## Estado actual
 
-- Revision: 6
-- Ultima actualizacion: 2026-08-02T23:17:41.955Z
+- Revision: 7
+- Ultima actualizacion: 2026-08-02T23:17:54.445Z
 
 ## Datos completos V2
 
@@ -18,7 +18,7 @@
 {
     "schemaVersion":  2,
     "id":  "chr_95bf954ca413abf652b08d64b690ac0b",
-    "revision":  6,
+    "revision":  7,
     "name":  "Adler",
     "color":  "#79a879",
     "identity":  {
@@ -58,7 +58,7 @@
                    "conditions":  {
 
                                   },
-                   "inspiration":  false,
+                   "inspiration":  true,
                    "exhaustion":  0
                },
     "proficiencies":  {
@@ -4045,7 +4045,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-08-02T23:17:41.955Z",
+                     "updatedAt":  "2026-08-02T23:17:54.445Z",
                      "migratedFrom":  "v1"
                  }
 }
