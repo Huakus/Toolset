@@ -4,7 +4,7 @@ import { GmWorkspaceApplication } from "../../src/application/gm/gm-workspace-ap
 import { InMemoryCampaignRepository } from "../../src/infrastructure/persistence/in-memory-campaign-repository";
 import { GmToolsPanel } from "../../src/ui/gm-tools-panel";
 import { removeGmNoteGroup } from "../../src/domain/gm/gm-workspace";
-import { calculateFloatingPanelPosition } from "../../src/ui/gm-app";
+import { calculateFloatingPanelPosition, GmApp } from "../../src/ui/gm-app";
 
 describe("GM workspace", () => {
   it("persists notes, tables and Google Docs URL with optimistic concurrency", async () => {
@@ -72,5 +72,26 @@ describe("GM workspace", () => {
       { width: 300, height: 250 },
     );
     expect(normal).toMatchObject({ left: 100, top: 154 });
+  });
+
+  it("renders persistent GM color controls and a scoped action log", () => {
+    const view = Object.create(GmApp.prototype) as {
+      gmColor: string;
+      undoStack: unknown[];
+      redoStack: unknown[];
+      actionLog: { id: number; label: string; occurredAt: string; kind: "action" }[];
+      renderColorPicker(): string;
+      renderActionHistoryControls(): string;
+    };
+    view.gmColor = "#6f96c4";
+    view.undoStack = [{}];
+    view.redoStack = [];
+    view.actionLog = [{ id: 1, label: "Aplicar daño", occurredAt: "2026-08-02T12:34:56.000Z", kind: "action" }];
+    expect(view.renderColorPicker()).toContain('data-gm-color-value="#6f96c4"');
+    expect(view.renderColorPicker()).toContain('id="gm-interface-color"');
+    const history = view.renderActionHistoryControls();
+    expect(history).toContain('data-gm-history="undo"');
+    expect(history).toContain("Aplicar daño");
+    expect(history).toContain("Log 1");
   });
 });

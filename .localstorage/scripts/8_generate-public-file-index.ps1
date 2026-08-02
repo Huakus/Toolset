@@ -163,11 +163,20 @@ $newContent = ($content -join "`r`n") + "`r`n"
 
 $currentContent = $null
 if (Test-Path $OutputFile) {
- $currentContent = Get-Content -Path $OutputFile -Raw -Encoding UTF8
+ $currentContent = [System.IO.File]::ReadAllText($OutputFile)
 }
 
 if ($currentContent -ne $newContent) {
- Set-Content -Path $OutputFile -Value $newContent -Encoding UTF8
+ $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+ $temporaryFile = "$OutputFile.tmp-$PID"
+ [System.IO.File]::WriteAllText($temporaryFile, $newContent, $utf8NoBom)
+ if (Test-Path -LiteralPath $OutputFile) {
+  $backupFile = "$OutputFile.bak-$PID"
+  [System.IO.File]::Replace($temporaryFile, $OutputFile, $backupFile)
+  Remove-Item -LiteralPath $backupFile -Force -ErrorAction SilentlyContinue
+ } else {
+  Move-Item -LiteralPath $temporaryFile -Destination $OutputFile
+ }
  Write-IndexLog ('REGENERADO {0}' -f $OutputFile) 'Green'
  Write-IndexLog ('Archivos indexados: {0}' -f $files.Count) 'Gray'
 }

@@ -1,368 +1,158 @@
 <#
 .SYNOPSIS
- Mantiene sincronizado el repo Toolset por Git.
+ Sincroniza exclusivamente el estado de campaña y la publicación ECE.
 
 .DESCRIPTION
- Responsabilidad unica:
- - Preparar/verificar el repo local del Toolset.
- - Hacer una sincronizacion inicial.
- - Sincronizar periodicamente mientras no exista la senal de stop.
- - Hacer una sincronizacion final antes de salir.
-
- Este script NO abre TaleSpire y NO espera el cierre del juego.
-
-.PARAMETER StopSignalFile
- Archivo usado como senal para finalizar el loop.
-
-.PARAMETER NoPauseOnError
- Si esta activo, el script NO espera una tecla antes de salir cuando ocurre un error fatal.
+ Worker transitorio mientras Git siga siendo el transporte entre jugadores.
+ Nunca agrega todo el repositorio, no modifica remotos y no incorpora cambios
+ de código durante una partida. Valida el blob V2 antes y después del sync.
 #>
 param(
- [Parameter(Mandatory = $true)]
- [string]$StopSignalFile,
-
+ [Parameter(Mandatory = $true)] [string]$StopSignalFile,
+ [string]$CampaignFileName = 'd8383957-1a6b-4719-9b68-797f03145404',
+ [string]$Branch = 'main',
+ [int]$IntervalSeconds = 15,
+ [switch]$ValidateOnly,
+ [switch]$RunOnce,
  [switch]$NoPauseOnError,
-
  [switch]$Quiet
 )
 
-# Continua aunque un comando no critico falle.
-# Los comandos Git se validan con logs/exit codes cuando realmente importa.
-$ErrorActionPreference = 'Continue'
-
+$ErrorActionPreference = 'Stop'
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$CommonLoggingScript = Join-Path $ScriptDir '0_common-logging.ps1'
-. $CommonLoggingScript
-
+. (Join-Path $ScriptDir '0_common-logging.ps1')
 Initialize-Logging -ScriptPath $PSCommandPath
 
-# ============================================================
-# Configuracion principal
-# ============================================================
+$LocalStorageDir = Split-Path -Parent $ScriptDir
+$Repo = Split-Path -Parent $LocalStorageDir
+$CampaignFile = Join-Path $LocalStorageDir $CampaignFileName
+$CampaignGitPath = ('.localstorage/{0}' -f $CampaignFileName)
+$EceGitPath = '.localstorage/ECE'
+$LockPath = Join-Path $env:TEMP 'talespire-toolset-git-sync.lock'
+$BackupRoot = Join-Path $env:TEMP 'TaleSpireToolsetBackups'
 
-# Carpeta local donde TaleSpire guarda el Symbiote Toolset.
-$Repo = Join-Path $env:USERPROFILE 'AppData\LocalLow\BouncyRock Entertainment\TaleSpire\Symbiotes\Toolset'
-
-# Repositorio remoto usado para sincronizar el Toolset.
-$Remote = 'https://github.com/Huakus/TaleSpire-5E-Toolset'
-
-# Rama principal del repo.
-$Branch = 'main'
-
-# Intervalo entre sincronizaciones mientras TaleSpire esta abierto.
-$Interval = 10
-
-
-# ============================================================
-# Deteccion de Git
-# ============================================================
-
-function Resolve-GitPath {
- <#
- Busca git.exe en ubicaciones comunes de Windows.
- Si no lo encuentra, devuelve 'git' esperando que este disponible en PATH.
- #>
- $candidates = @(
-  "$env:ProgramFiles\Git\cmd\git.exe",
-  "${env:ProgramFiles(x86)}\Git\cmd\git.exe",
-  "$env:LOCALAPPDATA\Programs\Git\cmd\git.exe"
- )
-
- foreach ($candidate in $candidates) {
-  if ($candidate -and (Test-Path $candidate)) {
-   return $candidate
-  }
- }
-
- return 'git'
-}
-
-$Git = Resolve-GitPath
-
-# ============================================================
-# Helpers de log
-# ============================================================
-
-function Write-Detail([string]$Message, [string]$Color = 'White') {
- <#
- Log indentado para detalles:
- archivos locales modificados, commits remotos y resumen de diff.
- #>
- Write-Log (' {0}' -f $Message) -Color $Color
-}
-
-function Get-DiffColor([string]$Message) {
- <#
- Color simple para lineas de diff:
- - Verde: inserciones/agregados
- - Rojo: eliminaciones
- - Gris: neutro
- #>
- if ($Message -match 'insertion') { return 'Green' }
- if ($Message -match 'deletion') { return 'Red' }
- if ($Message -match '\+') { return 'Green' }
- if ($Message -match '\-') { return 'Red' }
- return 'Gray'
-}
-
-function Wait-BeforeExitOnError {
- <#
- Pausa opcional para errores fatales.
- Sirve cuando el .ps1 se ejecuta directo, por fuera del .cmd.
- #>
- if (-not $NoPauseOnError) {
-  Write-Host ''
-  Write-Log 'Presiona una tecla para cerrar esta ventana...'
-  [void][System.Console]::ReadKey($true)
- }
-}
-
-function Invoke-GitChecked([string[]]$Arguments, [string]$ErrorMessage) {
- & $Git @Arguments > $null 2>&1
- if ($LASTEXITCODE -ne 0) {
-  throw ('{0} fallo con codigo {1}.' -f $ErrorMessage, $LASTEXITCODE)
- }
-}
-
-function Commit-LocalChanges([string]$Repo, [string]$CommitPrefix) {
- <#
- Stagea todo lo local y commitea si hay cambios.
- Devuelve un objeto con logs utiles para imprimir despues.
- #>
- & $Git -C $Repo add -A > $null 2>&1
-
- $dirty = & $Git -C $Repo status --porcelain
- $dirtyLog = @()
- $dirtyDiff = @()
- $committed = $false
-
- if ($dirty) {
-  $dirtyLog = $dirty -split "`n"
-  $dirtyDiff = (& $Git -C $Repo diff --cached --stat) -split "`n"
-  & $Git -C $Repo commit --quiet -m ($CommitPrefix + ': ' + (Get-Date -Format o))
-
-  if ($LASTEXITCODE -ne 0) {
-   throw ('ERROR: git commit fallo con codigo {0}.' -f $LASTEXITCODE)
-  }
-
-  $committed = $true
- }
-
- return [PSCustomObject]@{
-  Committed = $committed
-  Dirty = $dirty
-  DirtyLog = $dirtyLog
-  DirtyDiff = $dirtyDiff
- }
-}
-
-function Merge-CommitInfo($First, $Second) {
- $dirtyLog = @()
- $dirtyDiff = @()
- $dirty = $false
- $committed = $false
-
- if ($First) {
-  $dirty = $dirty -or [bool]$First.Dirty
-  $committed = $committed -or [bool]$First.Committed
-  $dirtyLog += $First.DirtyLog
-  $dirtyDiff += $First.DirtyDiff
- }
-
- if ($Second) {
-  $dirty = $dirty -or [bool]$Second.Dirty
-  $committed = $committed -or [bool]$Second.Committed
-  $dirtyLog += $Second.DirtyLog
-  $dirtyDiff += $Second.DirtyDiff
- }
-
- return [PSCustomObject]@{
-  Committed = $committed
-  Dirty = $dirty
-  DirtyLog = $dirtyLog
-  DirtyDiff = $dirtyDiff
- }
-}
-
-# ============================================================
-# Preparacion del repositorio local
-# ============================================================
-
-function Ensure-Repo([string]$Repo, [string]$Remote, [string]$Branch) {
- <#
- Prepara la carpeta local del Toolset:
- 1. Crea la carpeta si no existe.
- 2. Inicializa Git si todavia no hay .git.
- 3. Configura origin con el remoto correcto.
- 4. Hace fetch.
- 5. Se asegura de estar en la rama configurada.
- #>
- if (-not (Test-Path $Repo)) {
-  [void](New-Item -ItemType Directory -Force -Path $Repo)
- }
-
- if (Test-Path (Join-Path $Repo '.git')) {
-  Write-Log ('Verificando Toolset en rama {0}' -f $Branch)
- }
- else {
-  Write-Log ('Inicializando Toolset en {0}' -f $Repo)
-  Invoke-GitChecked -Arguments @('-C', $Repo, 'init') -ErrorMessage 'git init'
- }
-
- $origin = (& $Git -C $Repo remote get-url origin 2>$null)
-
- if (-not $origin) {
-  Invoke-GitChecked -Arguments @('-C', $Repo, 'remote', 'add', 'origin', $Remote) -ErrorMessage 'git remote add origin'
- }
- elseif ($origin -ne $Remote) {
-  Invoke-GitChecked -Arguments @('-C', $Repo, 'remote', 'set-url', 'origin', $Remote) -ErrorMessage 'git remote set-url origin'
- }
-
- & $Git -C $Repo fetch origin > $null 2>&1
-
- $localBranch = (& $Git -C $Repo rev-parse --abbrev-ref HEAD 2>$null)
-
- if ($localBranch -ne $Branch) {
-  & $Git -C $Repo checkout $Branch > $null 2>&1
-  if ($LASTEXITCODE -ne 0) {
-   & $Git -C $Repo checkout -b $Branch > $null 2>&1
-  }
- }
-}
-
-# ============================================================
-# Sincronizacion Git del Toolset
-# ============================================================
-
-function Sync-Toolset([string]$Repo, [string]$Branch) {
- <#
- Ejecuta una sincronizacion completa:
- 1. Verifica que la carpeta sea repo Git.
- 2. Detecta cambios remotos antes del pull.
- 3. Agrega y commitea cambios locales si existen.
- 4. Hace pull --rebase --autostash.
- 5. Hace push al remoto.
- 6. Muestra logs utiles solo cuando hubo cambios.
-
- Si no paso nada, imprime un punto inline para indicar que sigue vivo.
- #>
- if (-not (Test-Path (Join-Path $Repo '.git'))) {
-  Write-Detail ('No es repo Git: {0}' -f $Repo) 'Red'
-  return
- }
-
- $headBefore = (& $Git -C $Repo rev-parse HEAD 2>$null)
-
- # Trae informacion remota sin modificar todavia el working tree.
- & $Git -C $Repo fetch origin > $null 2>&1
-
- $remoteAhead = 0
- $remoteLog = @()
- $remoteDiff = @()
-
+function Invoke-Git {
+ param([Parameter(ValueFromRemainingArguments = $true)] [string[]]$Arguments)
+ # Windows PowerShell 5 convierte cualquier texto de stderr de un comando
+ # nativo en NativeCommandError cuando ErrorActionPreference es Stop. Git usa
+ # stderr también para progreso y warnings exitosos, por lo que evaluamos el
+ # código de salida real y conservamos el texto sólo para diagnósticos.
+ $previousErrorActionPreference = $ErrorActionPreference
  try {
-  $remoteAhead = [int](& $Git -C $Repo rev-list --count HEAD..origin/$Branch 2>$null)
-  if ($remoteAhead -gt 0) {
-   $remoteLog = & $Git -C $Repo log --oneline --max-count $remoteAhead HEAD..origin/$Branch
-   $remoteDiff = (& $Git -C $Repo diff --stat HEAD..origin/$Branch) -split "`n"
-  }
+  $ErrorActionPreference = 'Continue'
+  $output = & git -C $Repo @Arguments 2>&1
+  $exitCode = $LASTEXITCODE
+ } finally {
+  $ErrorActionPreference = $previousErrorActionPreference
  }
- catch {
-  # Si falla esta inspeccion, el pull posterior sigue intentando sincronizar.
- }
-
- $commitBeforePull = Commit-LocalChanges -Repo $Repo -CommitPrefix 'auto'
-
- # Rebase para evitar merges automaticos innecesarios.
- # Autostash cubre cambios locales que aparezcan entre pasos.
- & $Git -C $Repo pull --rebase --autostash origin $Branch > $null 2>&1
- if ($LASTEXITCODE -ne 0) {
-  throw ('ERROR: git pull --rebase origin/{0} fallo con codigo {1}.' -f $Branch, $LASTEXITCODE)
- }
-
- $commitAfterPull = Commit-LocalChanges -Repo $Repo -CommitPrefix 'auto-index'
- $commitInfo = Merge-CommitInfo -First $commitBeforePull -Second $commitAfterPull
-
- # Publica los cambios locales en origin/main.
- & $Git -C $Repo push -u origin $Branch > $null 2>&1
- if ($LASTEXITCODE -ne 0) {
-  throw ('ERROR: git push origin/{0} fallo con codigo {1}.' -f $Branch, $LASTEXITCODE)
- }
-
- $headAfter = (& $Git -C $Repo rev-parse HEAD 2>$null)
- $received = $remoteAhead -gt 0
- $dirty = $commitInfo.Dirty
-
- if ($dirty -or $received -or ($headAfter -ne $headBefore)) {
-  if ($dirty) {
-   Write-Log 'ENVIANDO Toolset'
-
-   foreach ($line in $commitInfo.DirtyLog) {
-    if ($line) {
-     Write-Detail ('local: {0}' -f $line) 'Yellow'
-    }
-   }
-
-   foreach ($line in $commitInfo.DirtyDiff) {
-    if ($line) {
-     Write-Detail ('diff: {0}' -f $line) (Get-DiffColor $line)
-    }
-   }
-  }
-
-  if ($received) {
-   Write-Log 'RECIBIENDO Toolset'
-
-   foreach ($line in $remoteLog) {
-    if ($line) {
-     Write-Detail ('remoto: {0}' -f $line) 'Cyan'
-    }
-   }
-
-   foreach ($line in $remoteDiff) {
-    if ($line) {
-     Write-Detail ('diff: {0}' -f $line) (Get-DiffColor $line)
-    }
-   }
-  }
-
-  if ((-not $dirty) -and (-not $received)) {
-   Write-Log 'Toolset actualizado'
-   Write-Detail 'cambios aplicados'
-  }
- }
- else {
-  Write-Log '.' -Inline
- }
+ if ($exitCode -ne 0) { throw ('git {0} falló: {1}' -f ($Arguments -join ' '), ($output -join [Environment]::NewLine)) }
+ return @($output)
 }
 
-# ============================================================
-# Flujo principal
-# ============================================================
+function Test-AllowedGitPath([string]$Path) {
+ $normalized = $Path.Replace('\', '/')
+ if ($normalized.StartsWith('./')) { $normalized = $normalized.Substring(2) }
+ return $normalized -eq $CampaignGitPath -or $normalized.StartsWith($EceGitPath + '/')
+}
 
-try {
- Write-Log 'Sincronizando Toolset...'
- Ensure-Repo -Repo $Repo -Remote $Remote -Branch $Branch
-
- # Sync inicial. Arranca antes o en paralelo al lanzamiento de TaleSpire.
- Sync-Toolset -Repo $Repo -Branch $Branch
-
- Write-Log 'Worker de sync activo. Esperando senal de stop...'
-
- # Loop de sync independiente. Termina cuando otro script crea StopSignalFile.
- while (-not (Test-Path $StopSignalFile)) {
-  Start-Sleep -Seconds $Interval
-  Sync-Toolset -Repo $Repo -Branch $Branch
+function Assert-CampaignBlob {
+ if (-not (Test-Path -LiteralPath $CampaignFile)) { throw "No existe el archivo de campaña configurado: $CampaignFile" }
+ try {
+  $raw = Get-Content -LiteralPath $CampaignFile -Raw -Encoding UTF8
+  $safeJson = $raw -replace '""\s*:', '"toolsetEmptyKey":'
+  $root = $safeJson | ConvertFrom-Json
  }
+ catch { throw 'El archivo de campaña no contiene JSON válido. Se pospone la sincronización.' }
+ $envelope = $root.__talespire5eToolsetV2
+ if ($null -eq $envelope) { throw 'No se encontró el envelope __talespire5eToolsetV2.' }
+ if ($envelope.format -ne 'talespire-toolset-campaign-v2') { throw 'El envelope no corresponde al formato V2 esperado.' }
+ if ([string]$envelope.checksum -notmatch '^[0-9a-fA-F]{64}$') { throw 'El checksum V2 no es válido.' }
+ if ($null -eq $envelope.campaign -or $envelope.campaign.schemaVersion -ne 2) { throw 'La campaña embebida no cumple schemaVersion 2.' }
+}
 
- # Sync final antes de salir.
- Write-Log 'Senal de stop recibida. Ejecutando sync final...'
- Sync-Toolset -Repo $Repo -Branch $Branch
- Write-Log ('OK: Sync Toolset finalizado correctamente en rama {0}.' -f $Branch)
+function Backup-CampaignBlob {
+ New-Item -ItemType Directory -Path $BackupRoot -Force | Out-Null
+ $stamp = Get-Date -Format 'yyyyMMdd-HHmmss-fff'
+ Copy-Item -LiteralPath $CampaignFile -Destination (Join-Path $BackupRoot "$CampaignFileName-$stamp.json")
+ $backups = Get-ChildItem -LiteralPath $BackupRoot -Filter "$CampaignFileName-*.json" | Sort-Object LastWriteTime -Descending
+ $backups | Select-Object -Skip 20 | Remove-Item -Force
+}
+
+function Get-ScopedStatus {
+ return @(Invoke-Git status --porcelain -- $CampaignGitPath $EceGitPath)
+}
+
+function Commit-ScopedChanges {
+ $changes = Get-ScopedStatus
+ if (-not $changes.Count) { return $false }
+ Assert-CampaignBlob
+ Invoke-Git add -- $CampaignGitPath $EceGitPath | Out-Null
+ $staged = @(Invoke-Git diff --cached --name-only -- $CampaignGitPath $EceGitPath)
+ if (-not $staged.Count) { return $false }
+ Invoke-Git commit -m ('sync(campaign): estado V2 y ECE {0}' -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')) -- $CampaignGitPath $EceGitPath | Out-Null
+ Write-Log ('Commit acotado: {0}' -f ($staged -join ', '))
+ return $true
+}
+
+function Get-RemoteDataChanges {
+ Invoke-Git fetch origin $Branch | Out-Null
+ $mergeBase = (Invoke-Git merge-base HEAD "origin/$Branch" | Select-Object -First 1)
+ $remoteChanges = @(Invoke-Git diff --name-only $mergeBase "origin/$Branch")
+ $unsafe = @($remoteChanges | Where-Object { -not (Test-AllowedGitPath $_) })
+ if ($unsafe.Count) { throw ('El remoto contiene cambios de código o configuración. Actualizá manualmente antes de jugar: {0}' -f ($unsafe -join ', ')) }
+ return $remoteChanges
+}
+
+function Sync-Once {
+ Assert-CampaignBlob
+ Backup-CampaignBlob
+ Commit-ScopedChanges | Out-Null
+ $remoteChanges = Get-RemoteDataChanges
+ if ($remoteChanges.Count) {
+  $unrelatedDirty = @(Invoke-Git status --porcelain | Where-Object {
+    $path = if ($_.Length -gt 3) { $_.Substring(3) } else { '' }
+    -not (Test-AllowedGitPath $path)
+  })
+  if ($unrelatedDirty.Count) { throw 'Hay cambios locales fuera de campaña/ECE. No se hará rebase automático ni se tocará el código.' }
+  try { Invoke-Git rebase "origin/$Branch" | Out-Null }
+  catch {
+   & git -C $Repo rebase --abort 2>$null
+   throw 'Git detectó un conflicto de datos. Se abortó el rebase y se preservó el estado local.'
+  }
+  Assert-CampaignBlob
+ }
+ Invoke-Git push origin "HEAD:$Branch" | Out-Null
+ if (-not $Quiet) { Write-Log 'Estado de campaña y ECE sincronizados.' }
+}
+
+$lock = $null
+try {
+ $lock = [System.IO.File]::Open($LockPath, 'OpenOrCreate', 'ReadWrite', 'None')
+ if (-not (Test-Path (Join-Path $Repo '.git'))) { throw "La carpeta activa no es un repositorio Git: $Repo" }
+ if ($ValidateOnly) {
+  Assert-CampaignBlob
+  $changes = Get-ScopedStatus
+  Write-Log ("Validación correcta. Rutas sincronizables con cambios: {0}" -f $changes.Count)
+  exit 0
+ }
+ do {
+  $finalAttempt = $RunOnce -or (Test-Path -LiteralPath $StopSignalFile)
+  try { Sync-Once }
+  catch {
+   Write-Log ("Sync pospuesto: {0}" -f $_.Exception.Message) -Color 'Yellow'
+   if ($finalAttempt) { throw }
+  }
+  if ($finalAttempt) { break }
+  Start-Sleep -Seconds ([Math]::Max(5, $IntervalSeconds))
+ } while ($true)
  exit 0
 }
 catch {
- Write-Log ('ERROR: {0}' -f $_.Exception.Message) -Color 'Red'
- Wait-BeforeExitOnError
+ $message = "ERROR fatal de sync: $($_.Exception.Message)"
+ Write-Log $message -Color 'Red'
+ if (-not $NoPauseOnError) { Show-ErrorAlert $message }
  exit 1
+}
+finally {
+ if ($lock) { $lock.Dispose() }
 }

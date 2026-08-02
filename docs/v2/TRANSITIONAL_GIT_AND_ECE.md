@@ -16,6 +16,14 @@ It also publishes the Markdown context under `.localstorage/ECE`.
   restricted to the configured campaign blob and `.localstorage/ECE`.
 - GitHub Actions publishes ECE; it is not part of the symbiote runtime.
 
+## Starting a game
+
+Run `.localstorage/scripts/1_toolset-launcher.cmd` while TaleSpire is closed.
+The orchestrator first installs any verified build from `dist-v2-pending`, then
+generates the ECE index, starts the scoped Git worker and opens TaleSpire. On
+game close it waits for the exporters, rebuilds the final index and performs a
+final scoped synchronization.
+
 ## Safety rules for the Git worker
 
 1. Resolve the repository from the worker location; never target the legacy

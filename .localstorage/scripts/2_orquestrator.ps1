@@ -5,7 +5,8 @@
 .DESCRIPTION
  Este script no hace sync, no exporta hojas, no genera indices y no abre TaleSpire directamente.
  Solo coordina scripts separados:
- - 8_generate-public-file-index.ps1: genera Indice_Archivos.md con URLs publicas de ECE.
+ - 8_generate-public-file-index.ps1: genera Indice_Archivos.md con rutas relativas de ECE.
+ - 9_install-pending-build.ps1: instala una compilacion verificada antes de abrir TaleSpire.
  - 5_sync-toolset-git.ps1: mantiene sincronizado el repo Toolset.
  - 4_export-character-sheets.ps1: exporta una hoja TXT por personaje.
  - 7_generate-history-index.ps1: genera Lore\Indice_Historia.md desde Lore\Capitulos.
@@ -41,6 +42,7 @@ $SyncToolsetScript = Join-Path $ScriptDir '5_sync-toolset-git.ps1'
 $WaitTaleSpireCloseScript = Join-Path $ScriptDir '6_wait-talespire-close.ps1'
 $GenerateHistoryIndexScript = Join-Path $ScriptDir '7_generate-history-index.ps1'
 $GeneratePublicFileIndexScript = Join-Path $ScriptDir '8_generate-public-file-index.ps1'
+$InstallPendingBuildScript = Join-Path $ScriptDir '9_install-pending-build.ps1'
 
 # ============================================================
 # Helpers
@@ -194,6 +196,7 @@ try {
  Assert-ScriptExists $WaitTaleSpireCloseScript
  Assert-ScriptExists $GenerateHistoryIndexScript
  Assert-ScriptExists $GeneratePublicFileIndexScript
+ Assert-ScriptExists $InstallPendingBuildScript
 
  if (-not (Test-Path -LiteralPath $RuntimeDir)) {
   [void](New-Item -ItemType Directory -Force -Path $RuntimeDir)
@@ -206,6 +209,12 @@ try {
  $Repo = Split-Path -Parent (Split-Path -Parent $ScriptDir)
  $PublicFileIndexRepo = Join-Path $Repo '.localstorage\ECE'
  $PublicFileIndexRelativePath = 'Indice_Archivos.md'
+
+ # Instala la compilacion verificada antes de que TaleSpire bloquee dist-v2.
+ Invoke-PowerShellOnce `
+  -Title 'Install Pending V2 Build' `
+  -ScriptPath $InstallPendingBuildScript `
+  -ExtraArgs @('-NoPauseOnError')
 
  # 1. Genera el indice publico una vez antes de iniciar el sync.
  Invoke-PowerShellOnce `

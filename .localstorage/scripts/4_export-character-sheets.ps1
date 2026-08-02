@@ -14,6 +14,7 @@ Compatibilidad:
 param(
     [string]$StopSignalFile,
     [string]$CampaignFileName = 'd8383957-1a6b-4719-9b68-797f03145404',
+    [string]$OutputDirectory,
     [int]$IntervalSeconds = 10,
     [switch]$RunOnce,
     [switch]$Quiet,
@@ -33,7 +34,7 @@ Initialize-Logging -ScriptPath $PSCommandPath
 
 $LocalStorageDir = Split-Path -Parent $ScriptDir
 $CampaignFile = Join-Path $LocalStorageDir $CampaignFileName
-$OutputDir = Join-Path $LocalStorageDir 'ECE\Hojas'
+$OutputDir = if ($OutputDirectory) { [System.IO.Path]::GetFullPath($OutputDirectory) } else { Join-Path $LocalStorageDir 'ECE\Hojas' }
 
 $IgnoredDirectoryNames = @(
     'Hojas',
@@ -102,6 +103,17 @@ function ConvertTo-SafeFilePart {
     return $value
 }
 
+function Repair-Mojibake {
+    param([string]$Text)
+    if ($null -eq $Text) { return $null }
+    $value = $Text
+    for ($attempt = 0; $attempt -lt 2 -and ($value.IndexOf([char]0x00C3) -ge 0 -or $value.IndexOf([char]0x00C2) -ge 0); $attempt++) {
+        $bytes = [Text.Encoding]::GetEncoding(1252).GetBytes($value)
+        $value = [Text.Encoding]::UTF8.GetString($bytes)
+    }
+    return $value
+}
+
 function Get-TextFileCandidates {
     param([Parameter(Mandatory = $true)] [string]$RootPath)
 
@@ -163,8 +175,9 @@ function Find-ToolsetJsonWithCharacters {
 
             $json = ConvertFrom-ToolsetJson -JsonText $text
             $envelope = Get-PropertyValue -Object $json -Names @('__talespire5eToolsetV2')
-            if (-not $envelope -or $envelope.format -ne 'talespire-toolset-campaign-v2' -or $envelope.schemaVersion -ne 2) { continue }
+            if (-not $envelope -or $envelope.format -ne 'talespire-toolset-campaign-v2') { continue }
             if ([string]$envelope.checksum -notmatch '^[0-9a-fA-F]{64}$') { continue }
+            if ($envelope.campaign.schemaVersion -ne 2) { continue }
             $characters = Get-PropertyValue -Object $envelope.campaign -Names @('characters')
 
             if ($characters) {
@@ -194,7 +207,7 @@ function Convert-CharacterContainerToList {
             if ([string]::IsNullOrWhiteSpace($name)) { $name = 'sin_nombre' }
 
             $result.Add([PSCustomObject]@{
-                Name = [string]$name
+                Name = Repair-Mojibake ([string]$name)
                 Value = $character
             })
         }
@@ -208,11 +221,37 @@ function Convert-CharacterContainerToList {
         if ([string]::IsNullOrWhiteSpace($name)) { $name = $property.Name }
 
         $result.Add([PSCustomObject]@{
-            Name = [string]$name
+            Name = Repair-Mojibake ([string]$name)
             Value = $character
         })
     }
 
+    return $result
+}
+
+function ConvertTo-PublicProjection {
+    param($Value)
+
+    if ($null -eq $Value) { return $null }
+    if ($Value -is [string]) { return Repair-Mojibake $Value }
+    if ($Value -is [ValueType]) { return $Value }
+    if ($Value -is [System.Collections.IDictionary]) {
+        $result = [ordered]@{}
+        foreach ($key in $Value.Keys) {
+            if ([string]$key -in @('legacy', 'legacyData', 'collections', 'unmapped')) { continue }
+            $result[[string]$key] = ConvertTo-PublicProjection $Value[$key]
+        }
+        return $result
+    }
+    if ($Value -is [System.Collections.IEnumerable]) {
+        return @($Value | ForEach-Object { ConvertTo-PublicProjection $_ })
+    }
+
+    $result = [ordered]@{}
+    foreach ($property in $Value.PSObject.Properties) {
+        if ($property.Name -in @('legacy', 'legacyData', 'collections', 'unmapped')) { continue }
+        $result[$property.Name] = ConvertTo-PublicProjection $property.Value
+    }
     return $result
 }
 
@@ -225,7 +264,7 @@ function Convert-CharacterToText {
     $lines = New-Object System.Collections.Generic.List[string]
     $lines.Add("# $Name")
     $lines.Add('')
-    $lines.Add('> Archivo generado automaticamente desde el JSON principal del Toolset.')
+    $lines.Add('> Archivo generado automaticamente desde la campana V2 del Toolset.')
     $lines.Add('> No editar manualmente.')
     $lines.Add('')
 
@@ -236,21 +275,22 @@ function Convert-CharacterToText {
 
     if ($race -or $class -or $level) {
         $lines.Add('## Resumen')
-        if ($race) { $lines.Add("- Raza: $race") }
-        if ($class) { $lines.Add("- Clase: $class") }
+        if ($race) { $lines.Add(("- Raza: {0}" -f (Repair-Mojibake ([string]$race)))) }
+        if ($class) { $lines.Add(("- Clase: {0}" -f (Repair-Mojibake ([string]$class)))) }
         if ($level) { $lines.Add("- Nivel: $level") }
         $lines.Add('')
     }
 
     $lines.Add('## Estado actual')
     $lines.Add('')
-    $lines.Add(('- Revisión: {0}' -f $Character.revision))
-    $lines.Add(('- Última actualización: {0}' -f $Character.metadata.updatedAt))
+    $lines.Add(('- Revision: {0}' -f $Character.revision))
+    $lines.Add(('- Ultima actualizacion: {0}' -f $Character.metadata.updatedAt))
     $lines.Add('')
     $lines.Add('## Datos completos V2')
     $lines.Add('')
     $lines.Add('```json')
-    $lines.Add(($Character | ConvertTo-Json -Depth 100))
+    $publicCharacter = ConvertTo-PublicProjection $Character
+    $lines.Add(($publicCharacter | ConvertTo-Json -Depth 100))
     $lines.Add('```')
     $lines.Add('')
 
@@ -270,7 +310,15 @@ function Write-TextIfChanged {
         if ($previous -eq $Content) { return $false }
     }
 
-    [System.IO.File]::WriteAllText($Path, $Content, $utf8NoBom)
+    $temporaryPath = "$Path.tmp-$PID"
+    [System.IO.File]::WriteAllText($temporaryPath, $Content, $utf8NoBom)
+    if (Test-Path -LiteralPath $Path) {
+        $backupPath = "$Path.bak-$PID"
+        [System.IO.File]::Replace($temporaryPath, $Path, $backupPath)
+        Remove-Item -LiteralPath $backupPath -Force -ErrorAction SilentlyContinue
+    } else {
+        Move-Item -LiteralPath $temporaryPath -Destination $Path
+    }
     return $true
 }
 
@@ -287,6 +335,11 @@ function Invoke-ExportCharacterSheetsOnce {
     $expectedFiles = New-Object System.Collections.Generic.HashSet[string]
     $changedCount = 0
     $removedCount = 0
+    $summaryLines = New-Object System.Collections.Generic.List[string]
+    $summaryLines.Add('# Resumen de personajes')
+    $summaryLines.Add('')
+    $summaryLines.Add(('> Estado V2 `{0}`. Generado automaticamente; no editar.' -f $source.Checksum))
+    $summaryLines.Add('')
 
     foreach ($entry in $characters) {
         $safeName = ConvertTo-SafeFilePart $entry.Name
@@ -300,6 +353,23 @@ function Invoke-ExportCharacterSheetsOnce {
             $changedCount++
             Write-Log ("EXPORTADO hoja: {0}" -f $fileName)
         }
+
+        $identity = $entry.Value.identity
+        $hp = $entry.Value.combat.hitPoints
+        $conditions = @($entry.Value.combat.conditions | ForEach-Object { $_.label })
+        $summaryLines.Add(('## {0}' -f $entry.Name))
+        $summaryLines.Add(('- Clase y nivel: {0} {1}' -f (Repair-Mojibake ([string]$identity.className)), $identity.level))
+        $summaryLines.Add(('- PG: {0} + {1} temporales / {2}; CA: {3}; velocidad: {4}' -f $hp.current, $hp.temporary, $hp.maximum, $entry.Value.combat.armorClass, $entry.Value.combat.speed))
+        $summaryLines.Add(('- Condiciones: {0}' -f $(if ($conditions.Count) { (@($conditions | ForEach-Object { Repair-Mojibake ([string]$_) }) -join ', ') } else { 'ninguna' })))
+        $summaryLines.Add(('- Hoja completa: `{0}`' -f $fileName))
+        $summaryLines.Add('')
+    }
+
+    $summaryPath = Join-Path $OutputDir 'Resumen_Personajes.md'
+    [void]$expectedFiles.Add($summaryPath.ToLowerInvariant())
+    if (Write-TextIfChanged -Path $summaryPath -Content ($summaryLines -join [Environment]::NewLine)) {
+        $changedCount++
+        Write-Log 'EXPORTADO resumen: Resumen_Personajes.md'
     }
 
     $existingFiles = Get-ChildItem -LiteralPath $OutputDir -File -ErrorAction SilentlyContinue | Where-Object { $_.Extension -in @('.txt', '.md') }
