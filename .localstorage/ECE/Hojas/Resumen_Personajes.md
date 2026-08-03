@@ -1,6 +1,6 @@
 # Resumen de personajes
 
-> Estado V2 `eff6c41e50c629c18dc75b4cbbd906378e8b5c5dab0fa580d3b69d2f16b20e19`. Generado automaticamente; no editar.
+> Estado V2 `7d80b8747a3c767b7fadaa67e3479e51edf7571d0ce7936a4a86d27943a9bb9c`. Generado automaticamente; no editar.
 
 ## Delerion
 - Clase y nivel: Mago Nigromante Ermitaño 9
@@ -17,7 +17,7 @@
 ## Varka
 - Clase y nivel: Semielfa Bruja
 (Archihada - Ermitaña - [pacto]) 9
-- PG: 49 + 0 temporales / 70; CA: 17; velocidad: 30ft.
+- PG: 29 + 0 temporales / 70; CA: 17; velocidad: 30ft.
 - Condiciones: ninguna
 - Hoja completa: `varka.md`
 

@@ -396,6 +396,59 @@
                     "description": ""
                 }
             ]
+        },
+        "Núcleo Luciente": {
+            "index": "núcleo-luciente",
+            "name": "Núcleo Luciente",
+            "equipment_category": {
+                "index": "wondrous-item",
+                "name": "wondrous-item"
+            },
+            "description": [
+                "{",
+                "  \"Núcleo Luciente Adaptado\": {",
+                "    \"index\": \"nucleo-luciente-adaptado\",",
+                "    \"name\": \"Núcleo Luciente Adaptado\",",
+                "    \"equipment_category\": {",
+                "      \"index\": \"adventuring-gear\",",
+                "      \"name\": \"adventuring-gear\"",
+                "    },",
+                "    \"description\": \"Una esfera de tecnología aeloriana modificada por Draven a partir de un núcleo recuperado en un antiguo campamento de investigación. Un cristal luciente central permanece suspendido entre varios anillos metálicos móviles cubiertos de grabados resonantes.<br><br><b>Vinculación:</b> Requiere vinculación por una criatura competente con Herramientas de Artífice o Herramientas de Tinkerer.<br><br><b>Cargas:</b> El núcleo posee 3 cargas máximas. Recupera todas sus cargas durante un descanso largo si se inserta un fragmento de Cristal Luciente en su receptáculo interno. Sin cristal no recupera cargas.<br><br><b>Resonancia del Recuerdo (Verde):</b> Consume 1 carga. Durante 10 minutos el usuario obtiene ventaja en pruebas de Investigación relacionadas con tecnología aeloriana y para localizar inscripciones, mecanismos o rastros mágicos ocultos.<br><br><b>Resonancia del Umbral (Azul):</b> Consume 1 carga. Durante 1 minuto el usuario obtiene resistencia al daño por frío y ventaja en tiradas realizadas para resistir condiciones climáticas extremas.<br><br><b>Resonancia de la Revelación (Violeta):</b> Consume 1 carga. Durante 1 minuto el núcleo puede interactuar con mecanismos aelorianos, activar dispositivos resonantes y abrir cerraduras diseñadas para responder a frecuencias lucientes.<br><br><b>Reconfiguración:</b> Como acción, una criatura vinculada puede cambiar la resonancia activa realizando una prueba de Inteligencia utilizando Herramientas de Artífice CD 12. Si falla, la acción se pierde y la resonancia no cambia.<br><br><b>Desgaste:</b> Cada vez que las 3 cargas sean consumidas antes de completar un descanso largo, tira 1d20. Con un resultado de 1, el núcleo se vuelve inestable. Mientras permanezca inestable, no puede utilizar la Resonancia de la Revelación. Puede repararse durante un descanso largo utilizando materiales metálicos valorados en 25 po y un fragmento de Cristal Luciente.<br><br><b>Estado actual:</b> Se trata de un dispositivo experimental cuya verdadera capacidad aún no ha sido descubierta. Las ruinas aelorianas podrían revelar nuevas resonancias y mejoras permanentes.\",",
+                "    \"properties\": [],",
+                "    \"cost\": {",
+                "      \"quantity\": 0,",
+                "      \"unit\": \"cp\"",
+                "    },",
+                "    \"weight\": 3,",
+                "    \"rarity\": {",
+                "      \"index\": \"uncommon\",",
+                "      \"name\": \"uncommon\"",
+                "    },",
+                "    \"gearCategory\": \"\"",
+                "  }",
+                "}"
+            ],
+            "properties": [
+                {
+                    "index": "attunement",
+                    "name": "Requires Attunement"
+                }
+            ],
+            "cost": {
+                "quantity": 5000,
+                "unit": "pp"
+            },
+            "weight": 1,
+            "rarity": {
+                "index": "rare",
+                "name": "rare"
+            },
+            "hasCharges": true,
+            "chargesOptions": {
+                "chargeReset": "short-rest",
+                "maxCharges": 3
+            },
+            "bonus": []
         }
     },
     "npcList": {
@@ -896,6 +949,466 @@
                 {
                     "Name": "Desvanecerse",
                     "Content": "Cuando recibe daño: reduce el daño en 1d8 + 3. Se mueve hasta 10 ft sin provocar OA."
+                }
+            ],
+            "LegendaryActions": [
+                {
+                    "Name": "",
+                    "Content": ""
+                }
+            ]
+        },
+        "Capas Verdes": {
+            "Id": "Capas Verdes",
+            "Name": "Capas Verdes",
+            "Path": "",
+            "Source": "Ecos del Círculo Eterno",
+            "Type": "Humanoide Mediano (cualquier raza humanoide), Legal Neutral  Guardia de élite de la Ciudad Alta",
+            "CR": "5",
+            "InitiativeModifier": "2",
+            "HP": {
+                "Value": 97,
+                "Notes": "13d8+39"
+            },
+            "AC": {
+                "Value": 18,
+                "Notes": "Armadura reforzada + Escudo"
+            },
+            "Speed": [
+                "30 ft."
+            ],
+            "Senses": [
+                "Percepción pasiva 15"
+            ],
+            "Languages": [
+                "Común",
+                " dialecto sureño."
+            ],
+            "Abilities": {
+                "Str": 16,
+                "Dex": 14,
+                "Con": 16,
+                "Int": 11,
+                "Wis": 15,
+                "Cha": 12
+            },
+            "Saves": [
+                {
+                    "Name": "Str",
+                    "Modifier": 6
+                },
+                {
+                    "Name": "Con",
+                    "Modifier": 6
+                }
+            ],
+            "Skills": [
+                {
+                    "Name": "Athletics",
+                    "Modifier": 6
+                },
+                {
+                    "Name": "Intimidation",
+                    "Modifier": 4
+                },
+                {
+                    "Name": "Perception",
+                    "Modifier": 5
+                }
+            ],
+            "DamageVulnerabilities": [],
+            "DamageResistances": [],
+            "DamageImmunities": [],
+            "ConditionImmunities": [],
+            "QuickAction": [
+                {
+                    "Name": "Espada larga de la Casa Curesh",
+                    "ToHit": "+6",
+                    "Damage": "1d8",
+                    "DamageType": "Cortante"
+                }
+            ],
+            "Traits": [
+                {
+                    "Name": "Disciplina de Formación",
+                    "Content": "Mientras el Capa Verde esté a 10 ft. de otro Capa Verde, obtiene: +1 a la CA.\n\nVentaja en tiradas contra ser empujado, derribado o agarrado. Esto representa su entrenamiento militar."
+                },
+                {
+                    "Name": "Guardia Juramentada",
+                    "Content": "Si una criatura dentro de 5 ft. del Capa Verde ataca a su protegido (el marqués o un aliado designado), el guardia puede usar su reacción para:\nimponer desventaja al ataque."
+                },
+                {
+                    "Name": "Veterano de Duelo",
+                    "Content": "El Capa Verde tiene ventaja en ataques de oportunidad contra criaturas que abandonen su alcance."
+                }
+            ],
+            "Actions": [
+                {
+                    "Name": "Ballesta pesada de guardia",
+                    "Content": "Ataque a distancia: +5 al ataque. Alcance: 90 ft. Daño: 1d10+2 perforante."
+                },
+                {
+                    "Name": "Maniobra de Derribo (Recarga 5–6)",
+                    "Content": "El guardia intenta desequilibrar a un enemigo.\nAtaque cuerpo a cuerpo. Si impacta: el objetivo debe hacer TS Fuerza CD 14 o queda derribado."
+                }
+            ],
+            "Reactions": [
+                {
+                    "Name": "Bloqueo de Escudo",
+                    "Content": "Cuando una criatura golpea al guardia con un ataque cuerpo a cuerpo: reduce el daño en 1d8 + 2."
+                }
+            ],
+            "LegendaryActions": [
+                {
+                    "Name": "",
+                    "Content": ""
+                }
+            ]
+        },
+        "Troll de Hielo": {
+            "Id": "Troll de Hielo",
+            "Name": "Troll de Hielo",
+            "Path": "",
+            "Source": "Ecos del Círculo Eterno",
+            "Type": "Gigante Grande, caótico maligno",
+            "CR": "5",
+            "InitiativeModifier": "1",
+            "HP": {
+                "Value": 5,
+                "Notes": "116"
+            },
+            "AC": {
+                "Value": 16,
+                "Notes": "Armadura Natural"
+            },
+            "Speed": [
+                "30"
+            ],
+            "Senses": [
+                "Visión en la oscuridad 90 ft. Percepción pasiva 12."
+            ],
+            "Languages": [
+                ""
+            ],
+            "Abilities": {
+                "Str": 20,
+                "Dex": 13,
+                "Con": 22,
+                "Int": 7,
+                "Wis": 9,
+                "Cha": 7
+            },
+            "Saves": [
+                {
+                    "Name": "Con",
+                    "Modifier": 9
+                }
+            ],
+            "Skills": [
+                {
+                    "Name": "Perception",
+                    "Modifier": 2
+                },
+                {
+                    "Name": "Survival",
+                    "Modifier": 2
+                }
+            ],
+            "DamageVulnerabilities": [],
+            "DamageResistances": [
+                "cold"
+            ],
+            "DamageImmunities": [],
+            "ConditionImmunities": [],
+            "QuickAction": [
+                {
+                    "Name": "",
+                    "ToHit": "8",
+                    "Damage": "2d6+5",
+                    "DamageType": "Cortante"
+                }
+            ],
+            "Traits": [
+                {
+                    "Name": "Regeneración",
+                    "Content": "Recupera 10 PG al inicio de su turno.\n\nLa regeneración deja de funcionar hasta el inicio de su siguiente turno si recibe:\n\nDaño de fuego; daño ácido.\n\nSi comienza su turno con 0 PG y sin haber recibido fuego o ácido desde su último turno, recupera 10 PG."
+                },
+                {
+                    "Name": "Sangre Congelante",
+                    "Content": "Cuando una criatura golpea al troll con un ataque cuerpo a cuerpo desde 5 ft. o menos, recibe:\n\n5 (1d10) de daño por frío."
+                },
+                {
+                    "Name": "Variante Luciente (opcional)",
+                    "Content": "Como estos trolls viven junto a la gran grieta de cristales lucientes, puedes añadir el siguiente rasgo a algunos individuos sin alterar demasiado la dificultad.\n\nMutación Cristalina.\n\nCuando el troll cae por debajo de la mitad de sus puntos de golpe, fragmentos cristalinos emergen de su piel.\n\nDurante el resto del combate:\n\nobtiene ventaja en salvaciones contra magia. Inflige 1d6 daño radiante con todos sus ataques.\n\nVisualmente, esta transformación debería resultar inquietante para los jugadores, pues constituye una de las primeras evidencias de que los cristales lucientes alteran profundamente a los seres vivos."
+                }
+            ],
+            "Actions": [
+                {
+                    "Name": "",
+                    "Content": ""
+                }
+            ],
+            "Reactions": [
+                {
+                    "Name": "",
+                    "Content": ""
+                }
+            ],
+            "LegendaryActions": [
+                {
+                    "Name": "",
+                    "Content": ""
+                }
+            ]
+        },
+        "Troll Bicéfalo Luciente": {
+            "Id": "Troll Bicéfalo Luciente",
+            "Name": "Troll Bicéfalo Luciente",
+            "Path": "",
+            "Source": "Ecos del Círculo Eterno",
+            "Type": "Gigante Grande, caótico maligno",
+            "CR": "8",
+            "InitiativeModifier": "1",
+            "HP": {
+                "Value": 136,
+                "Notes": "13d10+65"
+            },
+            "AC": {
+                "Value": 17,
+                "Notes": "Armadura natural"
+            },
+            "Speed": [
+                "30 ft."
+            ],
+            "Senses": [
+                "Visión en la oscuridad 90 ft. Percepción pasiva 12."
+            ],
+            "Languages": [
+                ""
+            ],
+            "Abilities": {
+                "Str": 22,
+                "Dex": 13,
+                "Con": 21,
+                "Int": 7,
+                "Wis": 11,
+                "Cha": 8
+            },
+            "Saves": [
+                {
+                    "Name": "Str",
+                    "Modifier": 9
+                },
+                {
+                    "Name": "Con",
+                    "Modifier": 8
+                },
+                {
+                    "Name": "Wis",
+                    "Modifier": 3
+                }
+            ],
+            "Skills": [
+                {
+                    "Name": "Athletics",
+                    "Modifier": 9
+                },
+                {
+                    "Name": "Perception",
+                    "Modifier": 6
+                }
+            ],
+            "DamageVulnerabilities": [
+                "cold"
+            ],
+            "DamageResistances": [],
+            "DamageImmunities": [],
+            "ConditionImmunities": [],
+            "QuickAction": [
+                {
+                    "Name": "Garra",
+                    "ToHit": "9",
+                    "Damage": "2d6+6",
+                    "DamageType": "Cortante"
+                }
+            ],
+            "Traits": [
+                {
+                    "Name": "Dos cabezas",
+                    "Content": "El troll tiene ventaja en:\n\nPercepción basada en vista y oído.\nTiradas de salvación contra: cegado; ensordecido; hechizado; asustado; aturdido; inconsciente.\n\nMientras una cabeza permanezca funcional, la criatura sigue luchando."
+                },
+                {
+                    "Name": "Regeneración",
+                    "Content": "Recupera 15 PG al inicio de su turno.\n\nLa regeneración deja de funcionar hasta el comienzo de su siguiente turno si recibe:\n\ndaño de fuego;\ndaño ácido.\n\nSi empieza su turno con 0 PG y no recibió fuego o ácido desde su último turno, recupera 15 PG."
+                },
+                {
+                    "Name": "Mutación Cristalina",
+                    "Content": "Los cristales incrustados en su cuerpo absorben energía mágica.\n\nTiene ventaja en las salvaciones contra conjuros y efectos mágicos."
+                },
+                {
+                    "Name": "Frenesí Mutante",
+                    "Content": "Una vez por ronda, cuando recibe daño de una criatura que pueda ver, puede realizar inmediatamente un ataque de Garra contra esa criatura como reacción."
+                }
+            ],
+            "Actions": [
+                {
+                    "Name": "Mordida Bicéfala",
+                    "Content": "Ataque cuerpo a cuerpo:\n\n+9 al ataque\n\nAlcance: 5 ft.\n\nObjetivo: una criatura\n\nImpacto:\n\n18 (2d10+7) perforante más 4 (1d8) frío"
+                },
+                {
+                    "Name": "Rugido de las Dos Gargantas",
+                    "Content": "(Recarga 5-6)\n\nLas dos cabezas emiten un rugido discordante amplificado por los cristales incrustados en su espalda.\n\nTodas las criaturas a 9 metros deben realizar una salvación de Sabiduría CD 15.\n\nFallo\nAsustado durante 1 minuto.\nPuede repetir la salvación al final de cada turno.\nÉxito\n\nInmune a este efecto durante 24 horas."
+                },
+                {
+                    "Name": "Fase de Enfurecimiento",
+                    "Content": "Cuando cae por debajo de 68 PG.\n\nLos cristales de su espalda comienzan a emitir un brillo azul intenso."
+                }
+            ],
+            "Reactions": [
+                {
+                    "Name": "",
+                    "Content": ""
+                }
+            ],
+            "LegendaryActions": [
+                {
+                    "Name": "",
+                    "Content": ""
+                }
+            ]
+        },
+        "Petro": {
+            "Id": "Petro",
+            "Name": "Petro",
+            "Path": "",
+            "Source": "Homebrew",
+            "Type": "Humano Mediano",
+            "CR": "0",
+            "InitiativeModifier": "4",
+            "HP": {
+                "Value": 71,
+                "Notes": "11d8+22"
+            },
+            "AC": {
+                "Value": 16,
+                "Notes": "Armadura de cuero tachonado"
+            },
+            "Speed": [
+                "30 ft."
+            ],
+            "Senses": [
+                "Percepción pasiva 18"
+            ],
+            "Languages": [
+                "Enano",
+                " Común",
+                " Élfico",
+                " Argot criminal."
+            ],
+            "Abilities": {
+                "Str": 10,
+                "Dex": 18,
+                "Con": 14,
+                "Int": 16,
+                "Wis": 14,
+                "Cha": 13
+            },
+            "Saves": [
+                {
+                    "Name": "Dex",
+                    "Modifier": 7
+                },
+                {
+                    "Name": "Int",
+                    "Modifier": 6
+                },
+                {
+                    "Name": "Wis",
+                    "Modifier": 5
+                }
+            ],
+            "Skills": [
+                {
+                    "Name": "Deception",
+                    "Modifier": 7
+                },
+                {
+                    "Name": "Insight",
+                    "Modifier": 5
+                },
+                {
+                    "Name": "Investigation",
+                    "Modifier": 9
+                },
+                {
+                    "Name": "Perception",
+                    "Modifier": 8
+                },
+                {
+                    "Name": "Persuasion",
+                    "Modifier": 4
+                },
+                {
+                    "Name": "Sleight of Hand",
+                    "Modifier": 7
+                },
+                {
+                    "Name": "Stealth",
+                    "Modifier": 10
+                }
+            ],
+            "DamageVulnerabilities": [],
+            "DamageResistances": [],
+            "DamageImmunities": [],
+            "ConditionImmunities": [],
+            "QuickAction": [
+                {
+                    "Name": "Daga oculta",
+                    "ToHit": "+7",
+                    "Damage": "1d4+4",
+                    "DamageType": "Perforante"
+                }
+            ],
+            "Traits": [
+                {
+                    "Name": "Herramientas de ladrón",
+                    "Content": "+10 en tiradas para forzar cerraduras e inutiliizar mecanismos."
+                },
+                {
+                    "Name": "Herramientas de artesano (herrería)",
+                    "Content": "+6 a las pruebas de artesanía relacionadas con herrería. "
+                },
+                {
+                    "Name": "Infiltrador Consumado",
+                    "Content": "Petro tiene ventaja en:\nEngaño para mantener identidades falsas.\nTiradas para evitar ser reconocido.\n\nExplica cómo logró trabajar durante largo tiempo como cocinero sin despertar sospechas."
+                },
+                {
+                    "Name": "Memoria Técnica Excepcional",
+                    "Content": "Petro recuerda con precisión:\n\nplanos;\nrutas;\nprocedimientos;\npatrones rúnicos;\nconfiguraciones mecánicas.\n\nTiene ventaja en pruebas de Investigación relacionadas con:\n\ntecnología aeloriana;\nforjas;\nmecanismos.\n\nEsta capacidad justifica el interés de Severino."
+                },
+                {
+                    "Name": "Equipo",
+                    "Content": "Daga ceremonial.\nDos cuchillos ocultos.\nBallesta ligera.\nJuego de herramientas de ladrón.\nDocumentación falsa.\nCuaderno cifrado con rutas de mercenarios.\nFragmentos de información sobre la tecnología de Sathrek.\nSímbolos y notas relacionadas con la forja Vann Durel."
+                }
+            ],
+            "Actions": [
+                {
+                    "Name": "Daga oculta",
+                    "Content": "Ataque: +7\n\nDaño:\n1d4+4 perforante\n\nSi tiene ventaja:\n\n+4d6 daño furtivo"
+                },
+                {
+                    "Name": "Ballesta ligera",
+                    "Content": "Ataque: +7\n\nDaño:\n1d8+4 perforante\n\nAlcance:\n120/240 ft."
+                },
+                {
+                    "Name": "Golpe preciso (Recarga 5-6)",
+                    "Content": "Petro realiza un ataque con ventaja.\n\nSi impacta:\n\n+14 (4d6) daño adicional.\n\nRepresenta el tipo de golpe que mató al dueño de la forja en la taberna."
+                }
+            ],
+            "Reactions": [
+                {
+                    "Name": "Desaparecer entre la multitud",
+                    "Content": "Cuando una criatura falla un ataque contra Petro:\n\nPuede moverse hasta la mitad de su velocidad sin provocar ataques de oportunidad."
                 }
             ],
             "LegendaryActions": [

@@ -10,8 +10,8 @@
 
 ## Estado actual
 
-- Revision: 2
-- Ultima actualizacion: 2026-07-27T00:43:06.952Z
+- Revision: 3
+- Ultima actualizacion: 2026-08-03T00:48:30.214Z
 
 ## Datos completos V2
 
@@ -19,7 +19,7 @@
 {
     "schemaVersion":  2,
     "id":  "chr_31b5cf3abda27cf3910182c6e1a6f82e",
-    "revision":  2,
+    "revision":  3,
     "name":  "Varka",
     "color":  "#d4875f",
     "identity":  {
@@ -41,7 +41,7 @@
                    "speed":  "30ft.",
                    "initiative":  "+3",
                    "hitPoints":  {
-                                     "current":  49,
+                                     "current":  29,
                                      "maximum":  70,
                                      "temporary":  0
                                  },
@@ -497,38 +497,6 @@
                                          "description":  "",
                                          "active":  false
                                      }
-                      },
-                      {
-                          "id":  "inv_ed0812d7694ef7f79ffaffc2c5d1aca8",
-                          "order":  2,
-                          "group":  "backpack",
-                          "name":  "Poción de mayor curación",
-                          "quantity":  1,
-                          "unitWeight":  0.5,
-                          "cost":  {
-                                       "quantity":  100,
-                                       "unit":  "gp"
-                                   },
-                          "category":  "backpack",
-                          "description":  "",
-                          "properties":  {
-
-                                         },
-                          "equipped":  false,
-                          "attuned":  false,
-                          "requiresAttunement":  false,
-                          "usable":  true,
-                          "consumable":  false,
-                          "charges":  null,
-                          "armor":  null,
-                          "weapon":  null,
-                          "bonuses":  {
-
-                                      },
-                          "effect":  {
-                                         "description":  "",
-                                         "active":  false
-                                     }
                       }
                   ],
     "traits":  {
@@ -716,15 +684,43 @@
                                                                              "prepared":  "1"
                                                                          },
                                                                          {
+                                                                             "name":  "Entender idiomas",
+                                                                             "prepared":  "0"
+                                                                         },
+                                                                         {
+                                                                             "name":  "Texto ilusorio",
+                                                                             "prepared":  "0"
+                                                                         },
+                                                                         {
+                                                                             "name":  "Hechizar persona",
+                                                                             "prepared":  "0"
+                                                                         },
+                                                                         {
+                                                                             "name":  "Mal de ojo",
+                                                                             "prepared":  "0"
+                                                                         },
+                                                                         {
+                                                                             "name":  "Protección contra el bien y el mal",
+                                                                             "prepared":  "0"
+                                                                         },
+                                                                         {
+                                                                             "name":  "Reprensión infernal",
+                                                                             "prepared":  "0"
+                                                                         },
+                                                                         {
+                                                                             "name":  "Retirada expeditiva",
+                                                                             "prepared":  "0"
+                                                                         },
+                                                                         {
+                                                                             "name":  "Sirviente invisible",
+                                                                             "prepared":  "0"
+                                                                         },
+                                                                         {
                                                                              "name":  "Virote encantado",
                                                                              "prepared":  "0"
                                                                          },
                                                                          {
                                                                              "name":  "Causar miedo",
-                                                                             "prepared":  "0"
-                                                                         },
-                                                                         {
-                                                                             "name":  "Reprensión infernal",
                                                                              "prepared":  "0"
                                                                          }
                                                                      ],
@@ -831,7 +827,7 @@
                                                           "spells":  [
                                                                          {
                                                                              "name":  "Destierro",
-                                                                             "prepared":  "1"
+                                                                             "prepared":  "0"
                                                                          },
                                                                          {
                                                                              "name":  "Marchitar",
@@ -851,7 +847,7 @@
                                                                          },
                                                                          {
                                                                              "name":  "Invocar demonio mayor",
-                                                                             "prepared":  "1"
+                                                                             "prepared":  "0"
                                                                          },
                                                                          {
                                                                              "name":  "Perdición elemental",
@@ -2226,7 +2222,7 @@
                                             "order":  0,
                                             "name":  "Destierro",
                                             "level":  4,
-                                            "prepared":  true,
+                                            "prepared":  false,
                                             "source":  "bundled",
                                             "definition":  {
                                                                "name":  "Destierro",
@@ -2396,7 +2392,7 @@
                                             "order":  5,
                                             "name":  "Invocar demonio mayor",
                                             "level":  4,
-                                            "prepared":  true,
+                                            "prepared":  false,
                                             "source":  "bundled",
                                             "definition":  {
                                                                "name":  "Invocar demonio mayor",
@@ -2526,6 +2522,244 @@
                                                            "description":  "",
                                                            "active":  false
                                                        }
+                                        },
+                                        {
+                                            "id":  "spl_8325f7152151d30b135c765b1176cf9b",
+                                            "order":  2,
+                                            "name":  "Entender idiomas",
+                                            "level":  1,
+                                            "prepared":  false,
+                                            "source":  "bundled",
+                                            "definition":  {
+                                                               "name":  "Entender idiomas",
+                                                               "level":  1,
+                                                               "description":  "Mientras dura el conjuro, entiendes el significado literal de cualquier idioma que escuches. También entiendes cualquier idioma escrito que veas, pero debes estar tocando la superficie en la que las palabras están escritas. Tardas alrededor de 1 minuto en leer una página de texto. Este conjuro no descodifica mensajes secretos en un texto o en un glifo, como un sigilo arcano, que no estén en el lenguaje escrito.",
+                                                               "higherLevels":  "",
+                                                               "range":  "Propio",
+                                                               "components":  "V, S, M",
+                                                               "material":  "Una pizca de hollín y sal.",
+                                                               "ritual":  false,
+                                                               "duration":  "1Hr",
+                                                               "concentration":  false,
+                                                               "castingTime":  "1A",
+                                                               "school":  "Adivinación",
+                                                               "classes":  "Bardo, Lanzador de rituales, Hechicero, Brujo, Mago",
+                                                               "attackType":  "none",
+                                                               "saveAbility":  "",
+                                                               "damageExpression":  "",
+                                                               "upcastDamageExpression":  "",
+                                                               "addAbilityModifier":  false,
+                                                               "damageType":  "",
+                                                               "year":  "2014"
+                                                           },
+                                            "effect":  {
+                                                           "description":  "",
+                                                           "active":  false
+                                                       }
+                                        },
+                                        {
+                                            "id":  "spl_7d08c0841c4df02cf6e539e7e5140421",
+                                            "order":  3,
+                                            "name":  "Texto ilusorio",
+                                            "level":  1,
+                                            "prepared":  false,
+                                            "source":  "bundled",
+                                            "definition":  {
+                                                               "name":  "Texto ilusorio",
+                                                               "level":  1,
+                                                               "description":  "Escribes en un pergamino, papel o algún otro material adecuado para escribir, imbuyéndolo de una potente ilusión que dura mientras lo haga el conjuro. Para ti y para cualquier criatura que designes cuando lanzas el conjuro, la escritura parece normal, de tu puño y letra, y transmite lo que pretendías cuando escribiste el mensaje; para todos los demás, parece como si hubiera sido escrito con una grafía desconocida o mágica que es ininteligible. También puedes hacer que la escritura parezca un mensaje completamente diferente, escrito por otra persona y en otro idioma, aunque debe ser un idioma que conozcas. Cuando el conjuro se desvanece, tanto la escritura original como la ilusoria desaparecen. Una criatura con vista verdadera puede leer el mensaje escondido.",
+                                                               "higherLevels":  "",
+                                                               "range":  "Toque",
+                                                               "components":  "S, M",
+                                                               "material":  "Tinta con base de plomo de al menos 10 po de valor, la cual consume el conjuro.",
+                                                               "ritual":  false,
+                                                               "duration":  "10 días",
+                                                               "concentration":  false,
+                                                               "castingTime":  "1m",
+                                                               "school":  "Ilusión",
+                                                               "classes":  "Bardo, Lanzador de Ritualo, Brujo, Mago",
+                                                               "attackType":  "none",
+                                                               "saveAbility":  "",
+                                                               "damageExpression":  "",
+                                                               "upcastDamageExpression":  "",
+                                                               "addAbilityModifier":  false,
+                                                               "damageType":  "",
+                                                               "year":  "2014"
+                                                           },
+                                            "effect":  {
+                                                           "description":  "",
+                                                           "active":  false
+                                                       }
+                                        },
+                                        {
+                                            "id":  "spl_6335273d19f9270caffd4898ca0273fb",
+                                            "order":  4,
+                                            "name":  "Hechizar persona",
+                                            "level":  1,
+                                            "prepared":  false,
+                                            "source":  "bundled",
+                                            "definition":  {
+                                                               "name":  "Hechizar persona",
+                                                               "level":  1,
+                                                               "description":  "Intentas hechizar a un humanoide que puedes ver dentro del alcance. Este debe hacer una tirada de salvación de Sabiduría, para la que tendrá ventaja si tus compañeros o tú estáis luchando contra él. Si falla, queda hechizado hasta que el conjuro termina o hasta que tus compañeros o tú lo dañáis. La criatura hechizada te ve como un conocido amistoso. Cuando el conjuro termina, la criatura sabe que estaba hechizada por ti.",
+                                                               "higherLevels":  "Cuando lanzas este conjuro usando un espacio de conjuro de nivel 2 o superior, puedes elegir como objetivo a una criatura adicional por cada nivel por encima de 1. Las criaturas deben estar a 30 pies o menos entre sí.",
+                                                               "range":  "30 Pies",
+                                                               "components":  "V, S",
+                                                               "material":  "",
+                                                               "ritual":  false,
+                                                               "duration":  "1 Hora",
+                                                               "concentration":  false,
+                                                               "castingTime":  "1A",
+                                                               "school":  "Encantamiento",
+                                                               "classes":  "Bardo, Clérigo, Druida, Hechicero, Brujo, Mago",
+                                                               "attackType":  "save",
+                                                               "saveAbility":  "wis",
+                                                               "damageExpression":  "",
+                                                               "upcastDamageExpression":  "",
+                                                               "addAbilityModifier":  false,
+                                                               "damageType":  "",
+                                                               "year":  "2014"
+                                                           },
+                                            "effect":  {
+                                                           "description":  "",
+                                                           "active":  false
+                                                       }
+                                        },
+                                        {
+                                            "id":  "spl_44d46ef7228c3a2a64e43f135027134d",
+                                            "order":  5,
+                                            "name":  "Mal de ojo",
+                                            "level":  6,
+                                            "prepared":  false,
+                                            "source":  "bundled",
+                                            "definition":  {
+                                                               "name":  "Mal de ojo",
+                                                               "level":  6,
+                                                               "description":  "Mientras dura el conjuro, tus ojos se convierten en un vacío negro imbuido con poder maligno. Una criatura de tu elección a 60 pies o menos de ti y que pueda verte debe superar una tirada de salvación de Sabiduría para no quedar afectada por uno de los siguientes efectos de tu elección mientras dura el conjuro. En cada turno hasta que el conjuro termine, puedes usar tu acción para elegir como objetivo a otra criatura, pero no puedes volver a elegir a una criatura que haya superado la tirada de salvación contra este conjuro.\u003cb\u003eAsqueado.\u003c/b\u003eEl objetivo tiene desventaja en las tiradas de ataque y en las pruebas de característica. Al final de cada uno de sus turnos, puede hacer otra tirada de salvación de Sabiduría. Si tiene éxito, el efecto termina.\u003cb\u003eAterrado.\u003c/b\u003e Aterras al objetivo. En cada uno de sus turnos, la criatura aterrada debe realizar la acción de esprintar y alejarse de ti por la ruta más corta y rápida disponible, a menos que no haya dónde moverse. Si el objetivo se mueve a un lugar que esté al menos a 60 pies de ti y desde donde ya no pueda verte, el efecto termina.\u003cb\u003eDormido.\u003c/b\u003e El objetivo cae inconsciente. Se despierta si recibe daño o si otra criatura utiliza su acción para despertarlo.",
+                                                               "higherLevels":  "",
+                                                               "range":  "Propio",
+                                                               "components":  "V, S",
+                                                               "material":  "",
+                                                               "ritual":  false,
+                                                               "duration":  "Hasta un minuto",
+                                                               "concentration":  true,
+                                                               "castingTime":  "1A",
+                                                               "school":  "Necromancia",
+                                                               "classes":  "Bardo, Hechicero, Brujo, Mago",
+                                                               "attackType":  "save",
+                                                               "saveAbility":  "wis",
+                                                               "damageExpression":  "",
+                                                               "upcastDamageExpression":  "",
+                                                               "addAbilityModifier":  false,
+                                                               "damageType":  "",
+                                                               "year":  "2014"
+                                                           },
+                                            "effect":  {
+                                                           "description":  "",
+                                                           "active":  false
+                                                       }
+                                        },
+                                        {
+                                            "id":  "spl_1bf67115a0e2fc3ba79fdd6c91e0cac6",
+                                            "order":  6,
+                                            "name":  "Protección contra el bien y el mal",
+                                            "level":  1,
+                                            "prepared":  false,
+                                            "source":  "bundled",
+                                            "definition":  {
+                                                               "name":  "Protección contra el bien y el mal",
+                                                               "level":  1,
+                                                               "description":  "Hasta que el conjuro termine, una criatura voluntaria a la que tocas está protegida contra ciertos tipos de criaturas: aberraciones, celestiales, elementales, feéricos, infernales y no muertos. La protección garantiza varios beneficios. Las criaturas de esos tipos tienen desventaja en las tiradas de ataque que hagan contra el objetivo. El objetivo tampoco puede ser hechizado, asustado o poseído por ellas. Si el objetivo ya está hechizado, asustado o poseído por una criatura de ese tipo, tiene ventaja en una nueva tirada de salvación que haga contra el efecto pertinente.",
+                                                               "higherLevels":  "",
+                                                               "range":  "Toque",
+                                                               "components":  "V, S, M",
+                                                               "material":  "Agua bendita o polvo de plata y hierro, los cuales consume el conjuro.",
+                                                               "ritual":  false,
+                                                               "duration":  "Hasta 10 minutos",
+                                                               "concentration":  true,
+                                                               "castingTime":  "1A",
+                                                               "school":  "Abjuración",
+                                                               "classes":  "Clérigo, Paladín, Brujo, Mago",
+                                                               "attackType":  "none",
+                                                               "saveAbility":  "",
+                                                               "damageExpression":  "",
+                                                               "upcastDamageExpression":  "",
+                                                               "addAbilityModifier":  false,
+                                                               "damageType":  "",
+                                                               "year":  "2014"
+                                                           },
+                                            "effect":  {
+                                                           "description":  "",
+                                                           "active":  false
+                                                       }
+                                        },
+                                        {
+                                            "id":  "spl_4a0f5657ca5cce0917af47353ddc878c",
+                                            "order":  8,
+                                            "name":  "Retirada expeditiva",
+                                            "level":  1,
+                                            "prepared":  false,
+                                            "source":  "bundled",
+                                            "definition":  {
+                                                               "name":  "Retirada expeditiva",
+                                                               "level":  1,
+                                                               "description":  "Este conjuro te permite moverte a un ritmo increíble. Cuando lo lanzas, y después como acción adicional en cada uno de tus turnos hasta que el conjuro termine, puedes realizar la acción de esprintar.",
+                                                               "higherLevels":  "",
+                                                               "range":  "Propio",
+                                                               "components":  "V, S",
+                                                               "material":  "",
+                                                               "ritual":  false,
+                                                               "duration":  "Hasta 10 minutos",
+                                                               "concentration":  true,
+                                                               "castingTime":  "1BA",
+                                                               "school":  "Transmutación",
+                                                               "classes":  "Hechicero, Brujo, Mago",
+                                                               "attackType":  "none",
+                                                               "saveAbility":  "",
+                                                               "damageExpression":  "",
+                                                               "upcastDamageExpression":  "",
+                                                               "addAbilityModifier":  false,
+                                                               "damageType":  "",
+                                                               "year":  "2014"
+                                                           },
+                                            "effect":  {
+                                                           "description":  "",
+                                                           "active":  false
+                                                       }
+                                        },
+                                        {
+                                            "id":  "spl_e980cfbc8ddbe4bfaf0af66df1e221d6",
+                                            "order":  9,
+                                            "name":  "Sirviente invisible",
+                                            "level":  1,
+                                            "prepared":  false,
+                                            "source":  "bundled",
+                                            "definition":  {
+                                                               "name":  "Sirviente invisible",
+                                                               "level":  1,
+                                                               "description":  "Este conjuro crea una fuerza invisible, inconsciente e informe que realiza tareas simples bajo tus órdenes hasta que el conjuro termine. El sirviente aparece en un lugar sin ocupar en el suelo dentro del alcance. Tiene CA 10, 1 punto de golpe y Fuerza 2, y no puede atacar. Si sus puntos de golpe se reducen a 0, el conjuro termina. Una vez en cada uno de tus turnos, como acción adicional, puedes darle órdenes mentalmente para que se mueva hasta 15 pies e interactúe con un objeto. El sirviente puede realizar una tarea simple que un sirviente humano podría hacer, como coger cosas, limpiar, remendar, doblar ropa, encender fuego y servir comida y vino. Una vez le das una orden, el sirviente realiza la tarea lo mejor que puede hasta que la completa. Luego espera tu siguiente orden. Si le ordenas al sirviente que realice una tarea que le haría alejarse más de 60 pies de ti, el conjuro termina.",
+                                                               "higherLevels":  "",
+                                                               "range":  "60 Pies",
+                                                               "components":  "V, S, M",
+                                                               "material":  "Un trozo de cuerda y un poco de madera.",
+                                                               "ritual":  false,
+                                                               "duration":  "1Hr",
+                                                               "concentration":  false,
+                                                               "castingTime":  "1A",
+                                                               "school":  "Conjuración",
+                                                               "classes":  "Bardo, Lanzador de Ritual, Brujo, Mago",
+                                                               "attackType":  "none",
+                                                               "saveAbility":  "",
+                                                               "damageExpression":  "",
+                                                               "upcastDamageExpression":  "",
+                                                               "addAbilityModifier":  false,
+                                                               "damageType":  "",
+                                                               "year":  "2014"
+                                                           },
+                                            "effect":  {
+                                                           "description":  "",
+                                                           "active":  false
+                                                       }
                                         }
                                     ],
                          "slots":  {
@@ -2569,7 +2803,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-07-27T00:43:06.952Z",
+                     "updatedAt":  "2026-08-03T00:48:30.214Z",
                      "migratedFrom":  "v1"
                  }
 }

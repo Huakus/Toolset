@@ -9,8 +9,8 @@
 
 ## Estado actual
 
-- Revision: 0
-- Ultima actualizacion: 2026-07-26T03:35:34.464Z
+- Revision: 1
+- Ultima actualizacion: 2026-08-03T00:48:30.214Z
 
 ## Datos completos V2
 
@@ -18,13 +18,13 @@
 {
     "schemaVersion":  2,
     "id":  "chr_2de8dab74a76cdd8d2b0d37cc84725ea",
-    "revision":  0,
+    "revision":  1,
     "name":  "Skitrixx \"Stix Ernesto\" Koboldtanz",
     "color":  "#d9bd73",
     "identity":  {
                      "className":  "Kobold Rogue",
                      "level":  9,
-                     "experience":  48000,
+                     "experience":  49873,
                      "alignment":  "TN"
                  },
     "abilities":  {
@@ -1169,7 +1169,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-07-26T03:35:34.464Z",
+                     "updatedAt":  "2026-08-03T00:48:30.214Z",
                      "migratedFrom":  "v1"
                  }
 }

@@ -12,8 +12,8 @@ Trasfondo: Soldado Oficial
 
 ## Estado actual
 
-- Revision: 0
-- Ultima actualizacion: 2026-07-26T03:35:34.464Z
+- Revision: 1
+- Ultima actualizacion: 2026-08-03T00:48:30.214Z
 
 ## Datos completos V2
 
@@ -21,7 +21,7 @@ Trasfondo: Soldado Oficial
 {
     "schemaVersion":  2,
     "id":  "chr_76486598066828133b7c1f1235e75f82",
-    "revision":  0,
+    "revision":  1,
     "name":  "Mercion",
     "color":  "#7f9ed6",
     "identity":  {
@@ -876,6 +876,38 @@ Trasfondo: Soldado Oficial
                                          "description":  "",
                                          "active":  false
                                      }
+                      },
+                      {
+                          "id":  "inv_ecb3582d3ae7851c10a51b532e1a3172",
+                          "order":  10,
+                          "group":  "backpack",
+                          "name":  "Poción de mayor curación",
+                          "quantity":  1,
+                          "unitWeight":  0.5,
+                          "cost":  {
+                                       "quantity":  100,
+                                       "unit":  "gp"
+                                   },
+                          "category":  "backpack",
+                          "description":  "",
+                          "properties":  {
+
+                                         },
+                          "equipped":  false,
+                          "attuned":  false,
+                          "requiresAttunement":  false,
+                          "usable":  true,
+                          "consumable":  false,
+                          "charges":  null,
+                          "armor":  null,
+                          "weapon":  null,
+                          "bonuses":  {
+
+                                      },
+                          "effect":  {
+                                         "description":  "",
+                                         "active":  false
+                                     }
                       }
                   ],
     "traits":  [
@@ -1231,7 +1263,7 @@ Trasfondo: Soldado Oficial
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-07-26T03:35:34.464Z",
+                     "updatedAt":  "2026-08-03T00:48:30.214Z",
                      "migratedFrom":  "v1"
                  }
 }

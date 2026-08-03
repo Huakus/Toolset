@@ -9,8 +9,8 @@
 
 ## Estado actual
 
-- Revision: 8
-- Ultima actualizacion: 2026-08-02T23:18:08.596Z
+- Revision: 9
+- Ultima actualizacion: 2026-08-03T00:48:30.214Z
 
 ## Datos completos V2
 
@@ -18,7 +18,7 @@
 {
     "schemaVersion":  2,
     "id":  "chr_95bf954ca413abf652b08d64b690ac0b",
-    "revision":  8,
+    "revision":  9,
     "name":  "Adler",
     "color":  "#79a879",
     "identity":  {
@@ -585,7 +585,7 @@
                                     "id":  "not_969668c8bb9d426eee3c4a4bf1f76478",
                                     "order":  0,
                                     "title":  "inventario auxiliar",
-                                    "content":  "un símbolo sagrado.\nDiamante para revivir\n0 raciones\nantídoto\nemaablema de contrabandista \nbrazalete de ilusión menor\ngemas 150 de oro\nposiones de cuaración 1\npiedra de foco divino\nLibro de los caballerossa\n740 de oro\n1120 de plata\n430 cobre\n9 de fragmentos de cristales \n3 cristales inestables \n2 pociones de curación mayor\nCollar bola de fuego 3 cargas\ntomo de la Zona luciente\nTodo de ur narkam\ncorazón de Ku rash\nanillo del marquez\n3 tomos del marquez",
+                                    "content":  "un símbolo sagrado.\nDiamante para revivir\n0 raciones\nantídoto\nemaablema de contrabandista \nbrazalete de ilusión menor\ngemas 150 de oro\nposiones de cuaración 1\npiedra de foco divino\nLibro de los caballerossa\n740 de oro\n1120 de plata\n430 cobre\n9 de fragmentos de cristales \n3 cristales inestables \n2 pociones de curación mayor\ncollar con 3 cargas de bola de fuego\ntomo de la Zona luciente\nTodo de ur narkam\ncorazón de Ku rash\n",
                                     "tags":  {
 
                                              }
@@ -762,8 +762,8 @@
                                                                      ],
                                                           "slots":  [
                                                                         false,
-                                                                        false,
-                                                                        false,
+                                                                        true,
+                                                                        true,
                                                                         true
                                                                     ]
                                                       },
@@ -841,7 +841,7 @@
                                                           "slots":  [
                                                                         true,
                                                                         true,
-                                                                        false
+                                                                        true
                                                                     ]
                                                       },
                                         "3rd-level":  {
@@ -4007,11 +4007,11 @@
                          "slots":  {
                                        "1":  {
                                                  "maximum":  4,
-                                                 "used":  1
+                                                 "used":  3
                                              },
                                        "2":  {
                                                  "maximum":  3,
-                                                 "used":  2
+                                                 "used":  3
                                              },
                                        "3":  {
                                                  "maximum":  3,
@@ -4045,7 +4045,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-08-02T23:18:08.596Z",
+                     "updatedAt":  "2026-08-03T00:48:30.214Z",
                      "migratedFrom":  "v1"
                  }
 }
