@@ -9,8 +9,8 @@
 
 ## Estado actual
 
-- Revision: 108
-- Ultima actualizacion: 2026-08-03T23:28:25.233Z
+- Revision: 112
+- Ultima actualizacion: 2026-08-03T23:29:23.934Z
 
 ## Datos completos V2
 
@@ -18,7 +18,7 @@
 {
     "schemaVersion":  2,
     "id":  "chr_9c8595d34129af1cf1218c06e84d0b26",
-    "revision":  108,
+    "revision":  112,
     "name":  "Delerion",
     "color":  "#9a73ad",
     "identity":  {
@@ -1126,38 +1126,6 @@
                                           "maximum":  0,
                                           "reset":  ""
                                       },
-                          "armor":  null,
-                          "weapon":  null,
-                          "bonuses":  {
-
-                                      },
-                          "effect":  {
-                                         "description":  "",
-                                         "active":  false
-                                     }
-                      },
-                      {
-                          "id":  "inv_b999554972c4a81e87915c428fdec5ed",
-                          "order":  27,
-                          "group":  "equipment",
-                          "name":  "Amuleto de mago",
-                          "quantity":  4,
-                          "unitWeight":  1,
-                          "cost":  {
-                                       "quantity":  0,
-                                       "unit":  "cp"
-                                   },
-                          "category":  "equipment",
-                          "description":  "",
-                          "properties":  {
-
-                                         },
-                          "equipped":  false,
-                          "attuned":  false,
-                          "requiresAttunement":  false,
-                          "usable":  false,
-                          "consumable":  false,
-                          "charges":  null,
                           "armor":  null,
                           "weapon":  null,
                           "bonuses":  {
@@ -3915,7 +3883,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-08-03T23:28:25.233Z",
+                     "updatedAt":  "2026-08-03T23:29:23.934Z",
                      "migratedFrom":  "v1"
                  }
 }
