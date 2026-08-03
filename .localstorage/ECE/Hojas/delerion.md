@@ -9,8 +9,8 @@
 
 ## Estado actual
 
-- Revision: 105
-- Ultima actualizacion: 2026-08-03T23:14:41.850Z
+- Revision: 106
+- Ultima actualizacion: 2026-08-03T23:19:44.767Z
 
 ## Datos completos V2
 
@@ -18,7 +18,7 @@
 {
     "schemaVersion":  2,
     "id":  "chr_9c8595d34129af1cf1218c06e84d0b26",
-    "revision":  105,
+    "revision":  106,
     "name":  "Delerion",
     "color":  "#9a73ad",
     "identity":  {
@@ -3915,7 +3915,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-08-03T23:14:41.850Z",
+                     "updatedAt":  "2026-08-03T23:19:44.767Z",
                      "migratedFrom":  "v1"
                  }
 }
