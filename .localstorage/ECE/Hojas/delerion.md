@@ -9,8 +9,8 @@
 
 ## Estado actual
 
-- Revision: 112
-- Ultima actualizacion: 2026-08-03T23:29:23.934Z
+- Revision: 114
+- Ultima actualizacion: 2026-08-03T23:29:53.677Z
 
 ## Datos completos V2
 
@@ -18,7 +18,7 @@
 {
     "schemaVersion":  2,
     "id":  "chr_9c8595d34129af1cf1218c06e84d0b26",
-    "revision":  112,
+    "revision":  114,
     "name":  "Delerion",
     "color":  "#9a73ad",
     "identity":  {
@@ -1126,38 +1126,6 @@
                                           "maximum":  0,
                                           "reset":  ""
                                       },
-                          "armor":  null,
-                          "weapon":  null,
-                          "bonuses":  {
-
-                                      },
-                          "effect":  {
-                                         "description":  "",
-                                         "active":  false
-                                     }
-                      },
-                      {
-                          "id":  "inv_8d9e7aa351add8936a7dca62ff2618ce",
-                          "order":  28,
-                          "group":  "equipment",
-                          "name":  "Túnica de Agati",
-                          "quantity":  2,
-                          "unitWeight":  1,
-                          "cost":  {
-                                       "quantity":  15000,
-                                       "unit":  "gp"
-                                   },
-                          "category":  "equipment",
-                          "description":  "",
-                          "properties":  {
-
-                                         },
-                          "equipped":  false,
-                          "attuned":  false,
-                          "requiresAttunement":  false,
-                          "usable":  false,
-                          "consumable":  false,
-                          "charges":  null,
                           "armor":  null,
                           "weapon":  null,
                           "bonuses":  {
@@ -3883,7 +3851,7 @@
                      },
     "metadata":  {
                      "createdAt":  "2026-07-26T03:35:34.464Z",
-                     "updatedAt":  "2026-08-03T23:29:23.934Z",
+                     "updatedAt":  "2026-08-03T23:29:53.677Z",
                      "migratedFrom":  "v1"
                  }
 }
